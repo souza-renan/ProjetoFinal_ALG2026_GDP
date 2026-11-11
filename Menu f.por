@@ -2,7 +2,7 @@ programa{
 	inclua biblioteca Util --> u
 	inclua biblioteca Texto --> t
 
-	
+	//Ryan - Cadastrar um filme
 	funcao adFilmes(cadeia filmes[][], inteiro linha){
 		
 		cadeia locados[10][4], pausa, nomeFilme, filmeAlugado
@@ -32,12 +32,7 @@ programa{
 		leia(pausa)
 		
 	}
-
-		
-	
-
-
-
+	// ALAN - Listar filmes locados
 	funcao filmesLoc(cadeia filLocados[][]){
 		inteiro l = 0, c = 0
 		para(l = 0; l < 2; l++){
@@ -48,15 +43,13 @@ programa{
 							escreva(filLocados[l][c], "\t")
 							}
 					
-				}
-
-			
-		
+				}	
+	
 			}
 		}
 	}
 
-	// ALAN
+	// ALAN - filmes disponiveis
 	funcao listarFilmes(cadeia matriz[][], inteiro total){
 		cadeia pausa
 		
@@ -84,14 +77,9 @@ programa{
 			leia(pausa)
 		}
 		
-		
-		
-	
-	
-	
 	}
 
-	//ALAN
+	//ALAN - Buscar um filme pelo nome
 	funcao buscarFilmes(cadeia matriz[][], inteiro total){
 		cadeia pausa, nomeFilme
 		inteiro filmeEncontrado = 0 
@@ -140,12 +128,53 @@ programa{
 			
 		}
 		
-		
-		
-		
 	}
 		
-	
+	//Renan - Alugar um filme
+	funcao alugarFilmes(cadeia alugarFilms[][], cadeia n, inteiro total){
+			cadeia pausa
+			inteiro filmeLocado
+
+		se(total == 0){
+			limpa()
+			escreva("Nenhum filme cadastrado!")	
+			escreva("Pressione Enter para continuar!")
+			leia(pausa)
+		}
+		senao{
+
+			inteiro filmelocado = 0
+			limpa()
+			escreva("=======================\n")
+			escreva("Filmes disponivels para locação: \n")
+			escreva("=======================\n")
+		
+			para(inteiro i = 0; i < total; i++){
+				
+				se(alugarFilms[i][3] == "N"){
+					escreva(i+1,". Nome: ", alugarFilms[i][0]," | ")
+					escreva("Ano: ", alugarFilms[i][1], "\n")
+					escreva("=======================\n")
+				}		
+			
+			}		
+				escreva("Escolha um filme para locar: ")
+				leia(filmeLocado)
+				
+				filmelocado = filmelocado - 1
+				
+				escreva("O filme: ", alugarFilms[filmeLocado][0], " | Ano: ", alugarFilms[filmeLocado][1], " Foi locado por você. Obrigado!")
+
+					 alugarFilms[filmeLocado][3] = "S"
+				
+		}		
+	}
+
+	//Renan - Devolver um filme
+	funcao devolverFilmes(cadeia matriz[][], inteiro total){
+			cadeia pausa
+		
+	}
 
 	
 	funcao inicio()
@@ -159,7 +188,7 @@ programa{
 			escreva("\n")
 
 			escolha(menu){
-				caso 1:
+				caso 1: // Ryan - Cadastrar FIlme
 					se(totalCadastrados < 10){
 					adFilmes(matriz, totalCadastrados)
 					totalCadastrados = totalCadastrados +1
@@ -171,10 +200,10 @@ programa{
 					
 					
 				pare
-				caso 2:
+				caso 2: // Alan = Listar filmes locados e disponiveis
 					listarFilmes(matriz, totalCadastrados)
 				pare
-				caso 3:
+				caso 3: // Weliton - FIlmes Locados
 					faca{
 						filmesLoc(matriz)
 
@@ -182,19 +211,20 @@ programa{
 						leia(i3)
 					}enquanto(i3 != 2)
 				pare
-				caso 4:
+				caso 4: // Renan - Alugar um filme
+						alugarFilmes(matriz, "N", totalCadastrados)
 				pare
-				caso 5:
+				caso 5: // Renan - Devolver um filme
 				pare
-				caso 6:
+				caso 6: // Vitor - FIlme mais locado
 				pare
-				caso 7:
+				caso 7: // Alan - Buscar FIlme pelo Nome
 					buscarFilmes(matriz, totalCadastrados)
 				
 				pare
-				caso 8:
+				caso 8: // Weliton - Atualizar dados de um filme 
 				pare
-				caso 9:
+				caso 9: // Vitor - Estatistica Geral
 				pare
 				caso 10:
 					escreva("Este Programa vai explodir em:")
@@ -211,14 +241,3 @@ programa{
        
 	}
 }
-/* $$$ Portugol Studio $$$ 
- * 
- * Esta seção do arquivo guarda informações do Portugol Studio.
- * Você pode apagá-la se estiver utilizando outro editor.
- * 
- * @POSICAO-CURSOR = 2964; 
- * @PONTOS-DE-PARADA = ;
- * @SIMBOLOS-INSPECIONADOS = ;
- * @FILTRO-ARVORE-TIPOS-DE-DADO = inteiro, real, logico, cadeia, caracter, vazio;
- * @FILTRO-ARVORE-TIPOS-DE-SIMBOLO = variavel, vetor, matriz, funcao;
- */
