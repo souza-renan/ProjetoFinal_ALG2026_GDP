@@ -1,0 +1,488 @@
+programa {
+	inclua biblioteca Util --> u
+	inclua biblioteca Texto --> t
+	inclua biblioteca Tipos --> ti
+
+	//Ryan - Cadastrar um filme
+	funcao adFilmes(cadeia filmes[][], inteiro linha){
+		
+		cadeia locados[10][4], pausa, nomeFilme, filmeAlugado
+
+		limpa()
+		escreva("============================\n")
+		escreva("      CADASTRO DE FILMES    \n")
+		escreva("============================\n")
+
+		// converter o nome do filme para caixa alta
+		escreva("Digite o nome do filme: ")
+		leia(nomeFilme)
+		filmes[linha][0] = t.caixa_alta(nomeFilme)
+		
+		escreva("Digite o ano de lançamento do filme: ")
+		leia(filmes[linha][1])
+		
+		escreva("Digite quantas vezes o filme já foi alugado: ")
+		leia(filmes[linha][2])
+
+		escreva("O filme está locado? (Responda com S ou N): ")
+		leia(filmeAlugado)
+		filmes[linha][3] = t.caixa_alta(filmeAlugado)
+		
+		escreva("Filme cadastrado com sucesso!\n")
+		escreva("Pressione Enter para continuar!\n")
+		leia(pausa)
+		
+	}
+	// ALAN - Listar filmes locados
+	funcao filmesLoc(cadeia filLocados[][], inteiro total){
+		inteiro l = 0, c = 0
+		para(l = 0; l < total; l++){
+			escreva("\n")
+			para(c = 0; c < 4; c++){
+				se(c == 3 e filLocados[l][c] == "S"){
+						para(c = 0; c < 4; c++){
+							escreva(filLocados[l][c], "\t")
+							}
+					
+				}	
+	
+			}
+		}
+	}
+
+	// ALAN - filmes disponiveis
+	funcao listarFilmes(cadeia matriz[][], inteiro total){
+		cadeia pausa
+		
+		se(total == 0){
+			limpa()
+			escreva("Nenhum filme cadastrado!")	
+			escreva("Pressione Enter para continuar!")
+			leia(pausa)
+		}
+		senao{
+			limpa()
+			escreva("=======================\n")
+			escreva("Filmes cadastrados: \n")
+			escreva("=======================\n")
+			
+			para(inteiro i = 0; i < total; i++){
+				escreva("Filme ", i + 1,": \n")
+				escreva("Nome: ", matriz[i][0],"\n")
+				escreva("Ano: ", matriz[i][1], "\n")
+				escreva("Vezes Locados:", matriz[i][2], "\n")
+				escreva("Filme Alugado(S / N): ", matriz[i][3], "\n")
+				escreva("=======================\n")
+			}	
+			escreva("Pressione Enter para continuar!")
+			leia(pausa)
+		}
+		
+	}
+
+	//ALAN - Buscar um filme pelo nome
+	funcao buscarFilmes(cadeia matriz[][], inteiro total){
+		cadeia pausa, nomeFilme
+		inteiro filmeEncontrado = 0 
+		
+		se(total == 0){
+			limpa()
+			escreva("Nenhum filme cadastrado!")	
+			escreva("Pressione Enter para continuar!")
+			leia(pausa)	
+			
+		}
+		senao{
+			limpa()
+			escreva("============================\n")
+			escreva("Digite o nome do filme para buscar: \n")
+			escreva("============================\n")
+			leia(nomeFilme)
+			nomeFilme = t.caixa_alta(nomeFilme)
+
+			para(inteiro i = 0; i< total; i++){
+				
+				se(matriz[i][0] == nomeFilme){
+					limpa()
+					escreva("Filme encontrado! \n")
+					escreva("Nome: ", matriz[i][0],"\n")
+					escreva("Ano: ", matriz[i][1], "\n")
+					escreva("Vezes Locados:", matriz[i][2], "\n")
+					escreva("Filme Alugado(S / N): ", matriz[i][3], "\n")
+					escreva("=======================\n")
+					filmeEncontrado = 1
+					escreva("Pressione Enter para continuar!")
+					leia(pausa)
+				}
+				
+			}
+
+			se(filmeEncontrado == 0){
+				limpa()
+				escreva("=======================\n")
+				escreva("Filme não encontrado!\n")
+				escreva("=======================\n")
+				escreva("Pressione Enter para continuar!")
+				leia(pausa)
+				
+			}
+			
+		}
+		
+	}
+		
+	//Renan - Alugar um filme
+	funcao alugarFilmes(cadeia alugarFilms[][], inteiro total){
+			cadeia pausa
+			inteiro contadorAlugar = 0
+
+		se(total == 0){
+			limpa()
+			escreva("Nenhum filme cadastrado!")	
+			escreva("Pressione Enter para continuar!")
+			leia(pausa)
+		}
+		senao{
+
+			inteiro filmeLocado = 0
+			limpa()
+			escreva("=======================\n")
+			escreva("Filmes disponiveis para locação: \n")
+			escreva("=======================\n")
+		
+			para(inteiro i = 0; i < total; i++){
+				
+				se(alugarFilms[i][3] == "N"){
+					contadorAlugar++
+					escreva(i+1,". Nome: ", alugarFilms[i][0]," | ")
+					escreva("Ano: ", alugarFilms[i][1], "\n")
+					escreva("=======================\n")
+				}		
+			
+			}		
+				escreva("Escolha um filme para locar: ")
+				leia(filmeLocado)
+				
+				filmeLocado = filmeLocado - 1
+				
+				escreva("O filme: ", alugarFilms[filmeLocado][0], " | Ano: ", alugarFilms[filmeLocado][1], " Foi locado por você. Obrigado!")
+
+					 alugarFilms[filmeLocado][3] = "S"
+					 
+					 inteiro validmaislocado = ti.cadeia_para_inteiro(alugarFilms[filmeLocado][2], 10)
+					 alugarFilms[filmeLocado][2] = ti.inteiro_para_cadeia(validmaislocado + 1,10)
+				
+		}	
+			se(contadorAlugar == 0){
+				escreva("Todos os filmes estão locados!")
+			}
+					escreva("Pressione Enter para continuar!")
+					leia(pausa)
+	}
+
+	//Renan - Devolver um filme
+	funcao devolverFilme(cadeia devolverFilms[][], inteiro total){
+			cadeia pausa
+			inteiro contadorDevolver = 0
+
+		se(total == 0){
+			limpa()
+			escreva("Nenhum filme cadastrado!")	
+			escreva("Pressione Enter para continuar!")
+			leia(pausa)
+		}
+		senao{
+
+			inteiro filmeDevolvido = 0
+			limpa()
+			escreva("=======================\n")
+			escreva("Filmes disponiveis para devolução: \n")
+			escreva("=======================\n")
+		
+			para(inteiro i = 0; i < total; i++){
+				
+				se(devolverFilms[i][3] == "S"){
+					contadorDevolver++
+					escreva(i+1,". Nome: ", devolverFilms[i][0]," | ")
+					escreva("Ano: ", devolverFilms[i][1], "\n")
+					escreva("=======================\n")
+				}		
+			
+			}		
+				escreva("Escolha um filme para devolver: ")
+				leia(filmeDevolvido)
+				
+				filmeDevolvido = filmeDevolvido - 1
+				limpa()
+				escreva("O filme: ", devolverFilms[filmeDevolvido][0], " | Ano: ", devolverFilms[filmeDevolvido][1], " Foi devolvido por você. Obrigado!")
+
+					 devolverFilms[filmeDevolvido][3] = "N"
+				
+		}	
+
+			se(contadorDevolver == 0){
+				escreva("Todos os filmes estão locados!")
+			}
+					
+			escreva("Pressione Enter para continuar!")
+			leia(pausa)	
+	}
+
+
+	//Vitor - Filme mais locado
+	funcao maisLocado(cadeia maisLoc[][], inteiro total){ 
+		inteiro i, j, k, filmeML = 0, counter = 0
+		cadeia pausa
+		
+		se(total == 0){
+			limpa()
+			escreva("Nenhum filme cadastrado!")	
+			escreva("Pressione Enter para continuar!")
+			leia(pausa)
+			}
+		senao{
+		
+			para(i = 0; i < total; i++){
+				se(ti.cadeia_para_inteiro(maisLoc[i][2], 10) > filmeML){
+				filmeML = ti.cadeia_para_inteiro(maisLoc[i][2], 10)
+				}
+			}
+			
+				para(j = 0; j < total; j++){
+					se(ti.cadeia_para_inteiro(maisLoc[j][2], 10) == filmeML){
+					counter++
+					}
+				}
+						se(counter == 1){
+						limpa()
+						escreva("=======================\n")
+						escreva("Filme mais locado: \n")
+						escreva("=======================\n")
+						}senao{
+						limpa()
+						escreva("=======================\n")
+						escreva("Filmes mais locados: \n")
+						escreva("=======================\n")
+						}
+							para(k = 0; k < total; k++){
+								se(ti.cadeia_para_inteiro(maisLoc[k][2], 10) == filmeML){
+								escreva("Nome: ", maisLoc[k][0]," | ")
+								escreva("Ano: ", maisLoc[k][1], " | ")
+								escreva("Vezes locado: ", maisLoc[k][2], "\n")											
+								}
+
+							}
+		}
+
+	}
+
+
+	// Weliton - Atualizar dados de um filme
+	funcao atualizarFilmes(cadeia matriz[][], inteiro total){
+		cadeia nomeFilme, pausa, novoNome, resposta
+    		inteiro encontrado = 0, opcao
+
+    		limpa()
+
+    		se(total == 0){
+    			escreva("Nenhum filme cadastrado!\n")
+   		}
+    		senao{
+        	escreva("============================\n")
+        	escreva("      ATUALIZAR FILME       \n")
+        	escreva("============================\n")
+
+        	escreva("Digite o nome do filme que deseja atualizar: ")
+        	leia(nomeFilme)
+
+        		nomeFilme = t.caixa_alta(nomeFilme)
+
+			para(inteiro i = 0; i < total; i++){
+
+            		se(matriz[i][0] == nomeFilme){
+					encontrado = 1
+
+                	limpa()
+
+                	escreva("Filme encontrado!\n")
+                	escreva("============================\n")
+                	escreva("Nome: ", matriz[i][0], "\n")
+                	escreva("Ano: ", matriz[i][1], "\n")
+                	escreva("Vezes locados: ", matriz[i][2], "\n")
+                	escreva("Alugado: ", matriz[i][3], "\n")
+
+                	escreva("============================\n")
+                	escreva("O que deseja atualizar?\n")
+                	escreva("1 - Nome do filme\n")
+                	escreva("2 - Ano de lançamento\n")
+                	escreva("3 - Quantidade de locações\n")
+                	escreva("4 - Situação do filme (S/N)\n")
+                	escreva("5 - Atualizar todos os dados\n")
+                	escreva("0 - Cancelar\n")
+
+                	escreva("\nEscolha uma opção: ")
+                		leia(opcao)
+
+                		escolha(opcao){
+
+                    	caso 1:
+                        	escreva("Digite o novo nome: ")
+					leia(novoNome)
+
+					matriz[i][0] = t.caixa_alta(novoNome)
+
+					escreva("\nNome atualizado com sucesso!")
+                    	pare
+
+                    	caso 2:
+					escreva("Digite o novo ano: ")
+					leia(matriz[i][1])
+
+					escreva("\nAno atualizado com sucesso!")
+					pare
+                    	caso 3:
+
+					escreva("Digite a nova quantidade de locações: ")
+					leia(matriz[i][2])
+
+					escreva("\nQuantidade atualizada com sucesso!")
+                    	pare
+
+					caso 4:
+					escreva("O filme está alugado? (S/N): ")
+					leia(resposta)
+
+					matriz[i][3] = t.caixa_alta(resposta)
+
+					escreva("\nSituação atualizada com sucesso!")
+                    pare
+
+                    caso 5:
+					escreva("Digite o novo nome: ")
+					leia(novoNome)
+
+					matriz[i][0] = t.caixa_alta(novoNome)
+
+					escreva("Digite o novo ano: ")
+					leia(matriz[i][1])
+
+					escreva("Digite a quantidade de locações: ")
+					leia(matriz[i][2])
+
+					escreva("O filme está alugado? (S/N): ")
+					leia(resposta)
+
+					matriz[i][3] = t.caixa_alta(resposta)
+
+					escreva("\nTodos os dados foram atualizados!")
+                    pare
+
+                    caso 0:
+
+                        escreva("\nAtualização cancelada!")
+                    pare
+
+                    caso contrario:
+
+                        escreva("\nOpção inválida!")
+                    pare
+                		}
+            		}
+			}
+
+        				se(encontrado == 0){
+            				escreva("\nFilme não encontrado!")
+        				}
+    		}
+
+						escreva("\nPressione Enter para continuar!")
+    							leia(pausa)
+	}
+
+	// Vitor - Estatisticas
+	funcao estatisticasFilmes(cadeia matriz[][], inteiro total){
+    inteiro qtdlocado = 0
+                	limpa()
+
+                	escreva("Estatisticas Filme!\n")
+                	escreva("============================\n")
+
+    para (inteiro i = 0; i < total, i ++){
+    
+      se (matriz[i][3] == "s"){
+      qtdlocado++ 
+    } real validfilm
+        validfilm = (total * qtdlocado)/100
+  }
+          escreva("Quantidade de filmes locados: ", qtdlocado)
+          escreva("quantos filmes estão cadastrados: ", total)
+          escreva(" Quantidade da ocupaçao é: ", validfilm)
+  }
+
+	funcao inicio()
+	{
+		inteiro menu = 0, i, i3 = 0, totalCadastrados = 0
+		cadeia matriz[10][4], pausa
+
+		faca{
+			limpa()
+			escreva("1. Cadastrar um filme \n2. Listar Filmes locados e disponíveis \n3. Filmes locados \n4. Alugar um filme \n5. Devolver um filme \n6. Filme mais locado \n7. Buscar um filme pelo nome \n8. Atualizar dados de um filme \n9. Estatísticas gerais \n10. Sair do programa \n\nQual A sua escolha? ")
+			leia(menu)
+			escreva("\n")
+
+			escolha(menu){
+				caso 1: // Ryan - Cadastrar FIlme
+					se(totalCadastrados < 10){
+					adFilmes(matriz, totalCadastrados)
+					totalCadastrados = totalCadastrados +1
+					}senao{
+						escreva("O limite de filmes cadastrado foi atingido! (10 filmes)\n")
+						escreva("Pressione Enter para continuar.\n")	
+						leia(pausa)
+					}
+					
+					
+				pare
+				caso 2: // Alan = Listar filmes locados e disponiveis
+					listarFilmes(matriz, totalCadastrados)
+				pare
+				caso 3: // Weliton - FIlmes Locados
+					faca{
+						filmesLoc(matriz, totalCadastrados)
+
+						escreva("\n\nDigite 2 para sair: ")
+						leia(i3)
+					}enquanto(i3 != 2)
+				pare
+				caso 4: // Renan - Alugar um filme
+						alugarFilmes(matriz, totalCadastrados)
+				pare
+				caso 5: // Renan - Devolver um filme
+						devolverFilme(matriz, totalCadastrados)				
+				pare
+				caso 6: // Vitor - FIlme mais locado
+						maisLocado(matriz, totalCadastrados)
+				pare
+				caso 7: // Alan - Buscar FIlme pelo Nome
+					buscarFilmes(matriz, totalCadastrados)
+				
+				pare
+				caso 8: // Weliton - Atualizar dados de um filme 
+					atualizarFilmes(matriz, totalCadastrados)
+				pare
+				caso 9: // Vitor - Estatistica Geral
+				pare
+				caso 10:
+					escreva("Este Programa vai explodir em:")
+					para(i = 10;i > 0; i--){
+						escreva("\n",i)
+					}
+					escreva("\nBOOOOOOOOMMMM")
+				
+				pare
+			}
+			
+		}enquanto(menu != 10)
+
+	}
+}
