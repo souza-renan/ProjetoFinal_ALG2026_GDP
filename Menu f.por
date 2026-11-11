@@ -1,6 +1,7 @@
 programa{
 	inclua biblioteca Util --> u
 	inclua biblioteca Texto --> t
+	inclua biblioteca Tipos --> ti
 
 	//Ryan - Cadastrar um filme
 	funcao adFilmes(cadeia filmes[][], inteiro linha){
@@ -133,7 +134,6 @@ programa{
 	//Renan - Alugar um filme
 	funcao alugarFilmes(cadeia alugarFilms[][], cadeia n, inteiro total){
 			cadeia pausa
-			inteiro filmeLocado
 
 		se(total == 0){
 			limpa()
@@ -143,10 +143,10 @@ programa{
 		}
 		senao{
 
-			inteiro filmelocado = 0
+			inteiro filmeLocado = 0
 			limpa()
 			escreva("=======================\n")
-			escreva("Filmes disponivels para locação: \n")
+			escreva("Filmes disponiveis para locação: \n")
 			escreva("=======================\n")
 		
 			para(inteiro i = 0; i < total; i++){
@@ -161,26 +161,110 @@ programa{
 				escreva("Escolha um filme para locar: ")
 				leia(filmeLocado)
 				
-				filmelocado = filmelocado - 1
+				filmeLocado = filmeLocado - 1
 				
 				escreva("O filme: ", alugarFilms[filmeLocado][0], " | Ano: ", alugarFilms[filmeLocado][1], " Foi locado por você. Obrigado!")
 
 					 alugarFilms[filmeLocado][3] = "S"
+					 
+					 inteiro validmaislocado = ti.cadeia_para_inteiro(alugarFilms[filmeLocado][2], 10)
+					 alugarFilms[filmeLocado][2] = ti.inteiro_para_cadeia(validmaislocado + 1,10)
 				
 		}		
 	}
 
 	//Renan - Devolver um filme
-	funcao devolverFilmes(cadeia matriz[][], inteiro total){
+	funcao devolverFilme(cadeia devolverFilms[][], cadeia n, inteiro total){
 			cadeia pausa
+
+		se(total == 0){
+			limpa()
+			escreva("Nenhum filme cadastrado!")	
+			escreva("Pressione Enter para continuar!")
+			leia(pausa)
+		}
+		senao{
+
+			inteiro filmeDevolvido = 0
+			limpa()
+			escreva("=======================\n")
+			escreva("Filmes disponiveis para devolução: \n")
+			escreva("=======================\n")
 		
+			para(inteiro i = 0; i < total; i++){
+				
+				se(devolverFilms[i][3] == "S"){
+					escreva(i+1,". Nome: ", devolverFilms[i][0]," | ")
+					escreva("Ano: ", devolverFilms[i][1], "\n")
+					escreva("=======================\n")
+				}		
+			
+			}		
+				escreva("Escolha um filme para devolver: ")
+				leia(filmeDevolvido)
+				
+				filmeDevolvido = filmeDevolvido - 1
+				limpa()
+				escreva("O filme: ", devolverFilms[filmeDevolvido][0], " | Ano: ", devolverFilms[filmeDevolvido][1], " Foi devolvido por você. Obrigado!")
+
+					 devolverFilms[filmeDevolvido][3] = "N"
+				
+		}		
 	}
 
+
+	//Vitor - Filme mais locado
+	funcao maisLocado(cadeia maisLoc[][], inteiro total){ 
+		inteiro i, j, k, filmeML = 0, counter = 0
+		cadeia pausa
+		
+		se(total == 0){
+			limpa()
+			escreva("Nenhum filme cadastrado!")	
+			escreva("Pressione Enter para continuar!")
+			leia(pausa)
+			}
+		senao{
+		
+			para(i = 0; i < total; i++){
+				se(ti.cadeia_para_inteiro(maisLoc[i][2], 10) > filmeML){
+				filmeML = ti.cadeia_para_inteiro(maisLoc[i][2], 10)
+				}
+			}
+			
+				para(j = 0; j < total; j++){
+					se(ti.cadeia_para_inteiro(maisLoc[j][2], 10) == filmeML){
+					counter++
+					}
+				}
+						se(counter == 1){
+						limpa()
+						escreva("=======================\n")
+						escreva("Filme mais locado: \n")
+						escreva("=======================\n")
+						}senao{
+						limpa()
+						escreva("=======================\n")
+						escreva("Filmes mais locados: \n")
+						escreva("=======================\n")
+						}
+							para(k = 0; k < total; k++){
+								se(ti.cadeia_para_inteiro(maisLoc[k][2], 10) == filmeML){
+								escreva("Nome: ", maisLoc[k][0]," | ")
+								escreva("Ano: ", maisLoc[k][1], " | ")
+								escreva("Vezes locado: ", maisLoc[k][2], "\n")											
+								}
+
+							}
+		}
+
+	}
 	
 	funcao inicio()
 	{
 		inteiro menu = 0, i, i3 = 0, totalCadastrados = 0
 		cadeia matriz[10][4], pausa
+
 		faca{
 			limpa()
 			escreva("1. Cadastrar um filme \n2. Listar Filmes locados e disponíveis \n3. Filmes locados \n4. Alugar um filme \n5. Devolver um filme \n6. Filme mais locado \n7. Buscar um filme pelo nome \n8. Atualizar dados de um filme \n9. Estatísticas gerais \n10. Sair do programa \n\nQual A sua escolha? ")
@@ -215,8 +299,10 @@ programa{
 						alugarFilmes(matriz, "N", totalCadastrados)
 				pare
 				caso 5: // Renan - Devolver um filme
+						devolverFilme(matriz, "N", totalCadastrados)				
 				pare
 				caso 6: // Vitor - FIlme mais locado
+						maisLocado(matriz, totalCadastrados)
 				pare
 				caso 7: // Alan - Buscar FIlme pelo Nome
 					buscarFilmes(matriz, totalCadastrados)
