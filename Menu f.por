@@ -2,11 +2,14 @@ programa{
 	inclua biblioteca Util --> u
 	inclua biblioteca Texto --> t
 	inclua biblioteca Tipos --> ti
+	inclua biblioteca Calendario --> c
+	
 
-	//Ryan - Cadastrar um filme
+	//Ryan/Weliton/ALan - Cadastrar um filme
 	funcao adFilmes(cadeia filmes[][], inteiro linha){
 		
-		cadeia locados[10][4], pausa, nomeFilme, filmeAlugado
+		cadeia pausa, nomeFilme, filmeAlugado, anoCadeia, anoC, qtdC 
+		inteiro ano = 0, anoAtual = c.ano_atual(), i = 0, qtd = 0
 
 		limpa()
 		escreva("============================\n")
@@ -17,38 +20,99 @@ programa{
 		escreva("Digite o nome do filme: ")
 		leia(nomeFilme)
 		filmes[linha][0] = t.caixa_alta(nomeFilme)
+
+		//Trava de entradas
+		escreva("Digite o ano de lançamento do filme (somente números): ")
+		leia(anoC)
+		faca{
+			se(nao ti.cadeia_e_inteiro(anoC, 10)){
+				escreva("Entrada inválida! Digite o ano utilizando apenas números:  \n")
+				leia(anoC)
+				i = 5
+			}
+			senao{
+				ano = ti.cadeia_para_inteiro(anoC, 10)
+				i = 10
+			}
+			se(ano < 0 ou ano > anoAtual){
+				escreva("Digite um ano válido, maior que 0 e anterior ao ano atual \n")
+				leia(anoC)
+			}
 		
-		escreva("Digite o ano de lançamento do filme: ")
-		leia(filmes[linha][1])
+			filmes[linha][1] = ti.inteiro_para_cadeia(ano, 10)
 		
+		}enquanto(ano < 0 ou ano > anoAtual ou i != 10)
+	
+		//Travas de entradas
 		escreva("Digite quantas vezes o filme já foi alugado: ")
-		leia(filmes[linha][2])
+		leia(qtdC)
+		faca{
+			se(nao ti.cadeia_e_inteiro(qtdC, 10)){
+				escreva("Entrada inválida! Digite a quantidade utilizando apenas números:  \n")
+				leia(qtdC)
+				i = 5
+			}
+			senao{
+				qtd = ti.cadeia_para_inteiro(qtdC, 10)
+				i = 10
+			}
+			se(qtd < 0){
+				escreva("Digite um numero válido, maior que 0: \n")
+				leia(qtdC)
+			}
+			
+			filmes[linha][2] = ti.inteiro_para_cadeia(qtd, 10)
+			
+		}enquanto(qtd < 0 ou i != 10)
+
+		
 
 		escreva("O filme está locado? (Responda com S ou N): ")
 		leia(filmeAlugado)
 		filmes[linha][3] = t.caixa_alta(filmeAlugado)
+		se(filmes[linha][3] != "S" e filmes[linha][3] != "N"){
+			faca{
+				escreva("Entrada inválida! Digite apenas S ou N:  \n")
+				leia(filmes[linha][3])
+			}enquanto(filmes[linha][3] != "S" e filmes[linha][3] != "N")
+		}	
+		
+			
+		
 		
 		escreva("Filme cadastrado com sucesso!\n")
 		escreva("Pressione Enter para continuar!\n")
 		leia(pausa)
 		
 	}
-	// ALAN - Listar filmes locados
+	// Ryan - Listar filmes locados
 	funcao filmesLoc(cadeia filLocados[][], inteiro total){
 		inteiro l = 0, c = 0
+		limpa()
+		
+		escreva("=======================\n")
+		escreva("Filmes cadastrados: \n")
+		escreva("=======================\n")
+		
 		para(l = 0; l < total; l++){
-			escreva("\n")
 			para(c = 0; c < 4; c++){
 				se(c == 3 e filLocados[l][c] == "S"){
-						para(c = 0; c < 4; c++){
-							escreva(filLocados[l][c], "\t")
-							}
+							escreva("Filme ", l + 1,": \n")
+							escreva("Nome: ", filLocados[l][0],"\n")
+							escreva("Ano: ",filLocados[l][1], "\n")
+							escreva("Vezes Locados: ", filLocados[l][2], "\n")
+							escreva("Filme Alugado(S / N): ", filLocados[l][3], "\n")
+							escreva("=======================\n")
+
+							
+							
 					
 				}	
 	
 			}
 		}
 	}
+	
 
 	// ALAN - filmes disponiveis
 	funcao listarFilmes(cadeia matriz[][], inteiro total){
@@ -402,16 +466,45 @@ programa{
 	funcao inicio()
 	{
 		inteiro menu = 0, i, i3 = 0, totalCadastrados = 0
-		cadeia matriz[10][4], pausa
+		cadeia matriz[10][4], pausa, men
 
 		faca{
 			limpa()
 			escreva("1. Cadastrar um filme \n2. Listar Filmes locados e disponíveis \n3. Filmes locados \n4. Alugar um filme \n5. Devolver um filme \n6. Filme mais locado \n7. Buscar um filme pelo nome \n8. Atualizar dados de um filme \n9. Estatísticas gerais \n10. Sair do programa \n\nQual A sua escolha? ")
-			leia(menu)
+			leia(men)
 			escreva("\n")
 
+			
+			faca{
+			se(nao ti.cadeia_e_inteiro(men, 10)){
+				escreva("Entrada inválida! Digite utilizando apenas números:  \n")
+				leia(men)
+				i = 15
+			}
+
+			senao{
+				menu = ti.cadeia_para_inteiro(men, 10)
+				se(menu < 0 ou menu > 10){
+					escreva("Entrada inválida! Digite um numero entre 1 e 10  \n")
+					u.aguarde(2000)
+					//leia(men)
+					i = 15
+				}
+				/*
+				se(nao ti.cadeia_e_inteiro(men, 10)){
+				escreva("Entrada inválida! Digite utilizando apenas números:  \n")
+				leia(men)
+				i = 15
+			}*/
+					
+				i = 11
+			}
+			}enquanto(i == 15)
+			
+	
+					
 			escolha(menu){
-				caso 1: // Ryan - Cadastrar FIlme
+				caso 1: // Ryan/Weliton - Cadastrar FIlme
 					se(totalCadastrados < 10){
 					adFilmes(matriz, totalCadastrados)
 					totalCadastrados = totalCadastrados +1
@@ -426,13 +519,10 @@ programa{
 				caso 2: // Alan = Listar filmes locados e disponiveis
 					listarFilmes(matriz, totalCadastrados)
 				pare
-				caso 3: // Weliton - FIlmes Locados
-					faca{
+				caso 3: //Ryan - FIlmes Locados
 						filmesLoc(matriz, totalCadastrados)
-
-						escreva("\n\nDigite 2 para sair: ")
-						leia(i3)
-					}enquanto(i3 != 2)
+						escreva("Pressione Enter para continuar.\n")	
+						leia(pausa)
 				pare
 				caso 4: // Renan - Alugar um filme
 						alugarFilmes(matriz, totalCadastrados)
@@ -462,7 +552,21 @@ programa{
 				pare
 			}
 			
+			
+			
 		}enquanto(menu != 10)
 
 	}
 }
+
+/* $$$ Portugol Studio $$$ 
+ * 
+ * Esta seção do arquivo guarda informações do Portugol Studio.
+ * Você pode apagá-la se estiver utilizando outro editor.
+ * 
+ * @POSICAO-CURSOR = 12720; 
+ * @PONTOS-DE-PARADA = ;
+ * @SIMBOLOS-INSPECIONADOS = ;
+ * @FILTRO-ARVORE-TIPOS-DE-DADO = inteiro, real, logico, cadeia, caracter, vazio;
+ * @FILTRO-ARVORE-TIPOS-DE-SIMBOLO = variavel, vetor, matriz, funcao;
+ */
