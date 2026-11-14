@@ -88,21 +88,30 @@ programa{
 	// Ryan - Listar filmes locados
 	funcao filmesLoc(cadeia filLocados[][], inteiro total){
 		inteiro l = 0, c = 0
+		cadeia pausa
+		
 		limpa()
+		se(total == 0){
+			limpa()
+			escreva("Nenhum filme cadastrado!\n")	
+			escreva("Pressione Enter para continuar!")
+			leia(pausa)
+			retorne
+		}
 		
 		escreva("=======================\n")
-		escreva("Filmes cadastrados: \n")
+		escreva("    Filmes locados     \n")
 		escreva("=======================\n")
 		
 		para(l = 0; l < total; l++){
 			para(c = 0; c < 4; c++){
 				se(c == 3 e filLocados[l][c] == "S"){
-							escreva("Filme ", l + 1,": \n")
-							escreva("Nome: ", filLocados[l][0],"\n")
-							escreva("Ano: ",filLocados[l][1], "\n")
-							escreva("Vezes Locados: ", filLocados[l][2], "\n")
-							escreva("Filme Alugado(S / N): ", filLocados[l][3], "\n")
-							escreva("=======================\n")
+					escreva("Filme ", l + 1,": \n")
+					escreva("Nome: ", filLocados[l][0],"\n")
+					escreva("Ano: ",filLocados[l][1], "\n")
+					escreva("Vezes Locados: ", filLocados[l][2], "\n")
+					escreva("Filme Alugado(S / N): ", filLocados[l][3], "\n")
+					escreva("=======================\n")
 
 							
 							
@@ -117,27 +126,53 @@ programa{
 	// ALAN - filmes disponiveis
 	funcao listarFilmes(cadeia matriz[][], inteiro total){
 		cadeia pausa
+		inteiro validLocados = 0, validDisp = 0
 		
 		se(total == 0){
 			limpa()
-			escreva("Nenhum filme cadastrado!")	
+			escreva("Nenhum filme cadastrado!\n")	
 			escreva("Pressione Enter para continuar!")
 			leia(pausa)
+			retorne
 		}
 		senao{
 			limpa()
 			escreva("=======================\n")
-			escreva("Filmes cadastrados: \n")
+			escreva("        Locados        \n")
 			escreva("=======================\n")
-			
+
 			para(inteiro i = 0; i < total; i++){
-				escreva("Filme ", i + 1,": \n")
-				escreva("Nome: ", matriz[i][0],"\n")
-				escreva("Ano: ", matriz[i][1], "\n")
-				escreva("Vezes Locados:", matriz[i][2], "\n")
-				escreva("Filme Alugado(S / N): ", matriz[i][3], "\n")
-				escreva("=======================\n")
+
+				se(matriz[i][3] == "S"){	
+					validLocados++
+					escreva("Filme ", i + 1,": \n")
+					escreva("Nome: ", matriz[i][0],"\n")
+					escreva("Ano: ", matriz[i][1], "\n")
+					escreva("Vezes Locados:", matriz[i][2], "\n")
+					escreva("---------------------\n")
+				}
 			}	
+			se(validLocados == 0){
+				escreva("Nenhum filme locado no momento!\n")	
+			}
+
+			escreva("=======================\n")
+			escreva("      Disponiveis      \n")
+			escreva("=======================\n")
+
+			para(inteiro i = 0; i < total; i++){
+
+				se(matriz[i][3] == "N"){	
+					escreva("Filme ", i + 1,": \n")
+					escreva("Nome: ", matriz[i][0],"\n")
+					escreva("Ano: ", matriz[i][1], "\n")
+					escreva("Vezes Locados:", matriz[i][2], "\n")
+					escreva("---------------------\n")
+				}
+			}
+			se(validDisp == 0){
+				escreva("Nenhum filme locado no momento!\n")	
+			}			
 			escreva("Pressione Enter para continuar!")
 			leia(pausa)
 		}
@@ -151,16 +186,16 @@ programa{
 		
 		se(total == 0){
 			limpa()
-			escreva("Nenhum filme cadastrado!")	
+			escreva("Nenhum filme cadastrado!\n")	
 			escreva("Pressione Enter para continuar!")
 			leia(pausa)	
-			
+			retorne
 		}
 		senao{
 			limpa()
-			escreva("============================\n")
+			escreva("====================================\n")
 			escreva("Digite o nome do filme para buscar: \n")
-			escreva("============================\n")
+			escreva("====================================\n")
 			leia(nomeFilme)
 			nomeFilme = t.caixa_alta(nomeFilme)
 
@@ -202,9 +237,10 @@ programa{
 
 		se(total == 0){
 			limpa()
-			escreva("Nenhum filme cadastrado!")	
+			escreva("Nenhum filme cadastrado!\n")	
 			escreva("Pressione Enter para continuar!")
 			leia(pausa)
+			retorne
 		}
 		senao{
 
@@ -251,9 +287,10 @@ programa{
 
 		se(total == 0){
 			limpa()
-			escreva("Nenhum filme cadastrado!")	
+			escreva("Nenhum filme cadastrado!\n")	
 			escreva("Pressione Enter para continuar!")
 			leia(pausa)
+			retorne
 		}
 		senao{
 
@@ -292,7 +329,6 @@ programa{
 			leia(pausa)	
 	}
 
-
 	//Vitor - Filme mais locado
 	funcao maisLocado(cadeia maisLoc[][], inteiro total){ 
 		inteiro i, j, k, filmeML = 0, counter = 0
@@ -300,10 +336,11 @@ programa{
 		
 		se(total == 0){
 			limpa()
-			escreva("Nenhum filme cadastrado!")	
+			escreva("Nenhum filme cadastrado!\n")	
 			escreva("Pressione Enter para continuar!")
 			leia(pausa)
-			}
+			retorne
+		}
 		senao{
 		
 			para(i = 0; i < total; i++){
@@ -340,7 +377,6 @@ programa{
 
 	}
 
-
 	// Weliton - Atualizar dados de um filme
 	funcao atualizarFilmes(cadeia matriz[][], inteiro total){
 		cadeia nomeFilme, pausa, novoNome, resposta
@@ -350,6 +386,9 @@ programa{
 
     		se(total == 0){
     			escreva("Nenhum filme cadastrado!\n")
+    			escreva("Pressione Enter para continuar!")
+			leia(pausa)
+    			retorne
    		}
     		senao{
         	escreva("============================\n")
@@ -521,8 +560,7 @@ programa{
 				pare
 				caso 3: //Ryan - FIlmes Locados
 						filmesLoc(matriz, totalCadastrados)
-						escreva("Pressione Enter para continuar.\n")	
-						leia(pausa)
+					
 				pare
 				caso 4: // Renan - Alugar um filme
 						alugarFilmes(matriz, totalCadastrados)
@@ -546,6 +584,7 @@ programa{
 					escreva("Este Programa vai explodir em:")
 					para(i = 10;i > 0; i--){
 						escreva("\n",i)
+						u.aguarde(300)
 					}
 					escreva("\nBOOOOOOOOMMMM")
 				
@@ -564,7 +603,8 @@ programa{
  * Esta seção do arquivo guarda informações do Portugol Studio.
  * Você pode apagá-la se estiver utilizando outro editor.
  * 
- * @POSICAO-CURSOR = 12720; 
+ * @POSICAO-CURSOR = 4945; 
+ * @DOBRAMENTO-CODIGO = [233, 283, 332, 380];
  * @PONTOS-DE-PARADA = ;
  * @SIMBOLOS-INSPECIONADOS = ;
  * @FILTRO-ARVORE-TIPOS-DE-DADO = inteiro, real, logico, cadeia, caracter, vazio;
