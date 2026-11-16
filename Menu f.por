@@ -122,7 +122,6 @@ programa{
 		leia(pausa)
 	}
 	
-
 	// ALAN - filmes disponiveis
 	funcao listarFilmes(cadeia matriz[][], inteiro total){
 		cadeia pausa
@@ -246,9 +245,9 @@ programa{
 		senao{
 
 			limpa()
-			escreva("=======================\n")
+			escreva("=================================\n")
 			escreva("Filmes disponiveis para locação: \n")
-			escreva("=======================\n")
+			escreva("=================================\n")
 		
 			para(inteiro i = 0; i < total; i++){
 				
@@ -260,7 +259,12 @@ programa{
 				}		
 			
 			}	
-
+			se(contadorAlugar == 0){
+				escreva("Nenhum filme disponível para locar.\n")
+				escreva("Pressione Enter para continuar!")
+				leia(pausa)
+				retorne
+			}
 			escreva("\nQual filme você deseja alugar? ")
 			leia(filmeLocado)
 
@@ -324,9 +328,9 @@ programa{
 		senao{
 
 			limpa()
-			escreva("=======================\n")
+			escreva("===================================\n")
 			escreva("Filmes disponiveis para devolução: \n")
-			escreva("=======================\n")
+			escreva("===================================\n")
 		
 			para(inteiro i = 0; i < total; i++){
 				
@@ -336,7 +340,13 @@ programa{
 					escreva("Ano: ", devolverFilms[i][1], "\n")
 					escreva("=======================\n")
 				}
-			}		
+			}
+			se(contadorDevolver == 0){
+				escreva("Nenhum filme locado para devolver.\n")
+				escreva("Pressione Enter para continuar!")
+				leia(pausa)
+				retorne
+			}	
 				escreva("\nQual filme você deseja devovler? ")
 				leia(filmeDevolvido)
 		
@@ -687,3 +697,15 @@ programa{
 
 	}
 }
+/* $$$ Portugol Studio $$$ 
+ * 
+ * Esta seção do arquivo guarda informações do Portugol Studio.
+ * Você pode apagá-la se estiver utilizando outro editor.
+ * 
+ * @POSICAO-CURSOR = 8992; 
+ * @DOBRAMENTO-CODIGO = [8, 88, 125, 182, 233, 398, 448, 574];
+ * @PONTOS-DE-PARADA = ;
+ * @SIMBOLOS-INSPECIONADOS = ;
+ * @FILTRO-ARVORE-TIPOS-DE-DADO = inteiro, real, logico, cadeia, caracter, vazio;
+ * @FILTRO-ARVORE-TIPOS-DE-SIMBOLO = variavel, vetor, matriz, funcao;
+ */
