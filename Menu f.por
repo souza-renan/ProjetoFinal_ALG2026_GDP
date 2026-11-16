@@ -112,14 +112,14 @@ programa{
 					escreva("Vezes Locados: ", filLocados[l][2], "\n")
 					escreva("Filme Alugado(S / N): ", filLocados[l][3], "\n")
 					escreva("=======================\n")
-
-							
-							
+			
 					
 				}	
 	
 			}
 		}
+		escreva("Pressione Enter para continuar!\n")
+		leia(pausa)
 	}
 	
 
@@ -162,7 +162,8 @@ programa{
 
 			para(inteiro i = 0; i < total; i++){
 
-				se(matriz[i][3] == "N"){	
+				se(matriz[i][3] == "N"){
+					validDisp++
 					escreva("Filme ", i + 1,": \n")
 					escreva("Nome: ", matriz[i][0],"\n")
 					escreva("Ano: ", matriz[i][1], "\n")
@@ -232,8 +233,8 @@ programa{
 		
 	//Renan - Alugar um filme
 	funcao alugarFilmes(cadeia alugarFilms[][], inteiro total){
-			cadeia pausa
-			inteiro contadorAlugar = 0
+			cadeia pausa, filmeLocado
+			inteiro contadorAlugar = 0, filmeLocadovalid = 0, j = 0, filmeLocadointeiro = 0
 
 		se(total == 0){
 			limpa()
@@ -244,7 +245,6 @@ programa{
 		}
 		senao{
 
-			inteiro filmeLocado = 0
 			limpa()
 			escreva("=======================\n")
 			escreva("Filmes disponiveis para locação: \n")
@@ -259,31 +259,60 @@ programa{
 					escreva("=======================\n")
 				}		
 			
-			}		
-				escreva("Escolha um filme para locar: ")
-				leia(filmeLocado)
-				
-				filmeLocado = filmeLocado - 1
-				
-				escreva("O filme: ", alugarFilms[filmeLocado][0], " | Ano: ", alugarFilms[filmeLocado][1], " Foi locado por você. Obrigado!")
+			}	
 
-					 alugarFilms[filmeLocado][3] = "S"
+			escreva("\nQual filme você deseja alugar? ")
+			leia(filmeLocado)
+
+			faca{
+			
+				se(nao ti.cadeia_e_inteiro(filmeLocado, 10)){
+				escreva("\nEntrada inválida! Digite um dos numeros referente aos filmes!\n")
+				leia(filmeLocado)
+				j = 5
+				
+				}senao{
+				
+				filmeLocadointeiro = ti.cadeia_para_inteiro(filmeLocado, 10) 
+				filmeLocadointeiro = filmeLocadointeiro - 1
+				filmeLocadovalid = ti.cadeia_para_inteiro(filmeLocado, 10)
+					
+					se(filmeLocadointeiro < 0 ou filmeLocadointeiro >= total){
+					escreva("Entrada inválida! Digite um dos numeros referente aos filmes!\n")
+					leia(filmeLocado)
+					j = 5
+					}senao se(alugarFilms[filmeLocadointeiro][3] == "N"){
+
+					j = 10
+	
+					escreva("O filme abaixo foi foi locado por você. Obrigado!\n", alugarFilms[filmeLocadointeiro][0], "\nAno: ", alugarFilms[filmeLocadointeiro][1])
+
+					alugarFilms[filmeLocadointeiro][3] = "S"
 					 
-					 inteiro validmaislocado = ti.cadeia_para_inteiro(alugarFilms[filmeLocado][2], 10)
-					 alugarFilms[filmeLocado][2] = ti.inteiro_para_cadeia(validmaislocado + 1,10)
+					inteiro validLocadoMaisUm = ti.cadeia_para_inteiro(alugarFilms[filmeLocadointeiro][2], 10)
+					alugarFilms[filmeLocadointeiro][2] = ti.inteiro_para_cadeia(validLocadoMaisUm + 1,10)
+				
+					}senao{
+					escreva("Entrada inválida! Digite um numero referente aos filmes que estão disponiveis.\n")
+					leia(filmeLocado)
+					j = 5
+					}	
+				}
+		
+			}enquanto(filmeLocadovalid < 0 ou filmeLocadovalid > 10 ou j != 10)
 				
 		}	
-			se(contadorAlugar == 0){
-				escreva("Todos os filmes estão locados!")
-			}
-					escreva("Pressione Enter para continuar!")
-					leia(pausa)
+						se(contadorAlugar == 0){
+						escreva("Todos os filmes estão locados!")
+						}
+							escreva("Pressione Enter para continuar!")
+							leia(pausa)
 	}
 
 	//Renan - Devolver um filme
 	funcao devolverFilme(cadeia devolverFilms[][], inteiro total){
-			cadeia pausa
-			inteiro contadorDevolver = 0
+			cadeia pausa, filmeDevolvido
+			inteiro contadorDevolver = 0, filmeDevolvidovalid = 0, j = 0, filmeDevolvidointeiro = 0
 
 		se(total == 0){
 			limpa()
@@ -294,7 +323,6 @@ programa{
 		}
 		senao{
 
-			inteiro filmeDevolvido = 0
 			limpa()
 			escreva("=======================\n")
 			escreva("Filmes disponiveis para devolução: \n")
@@ -307,28 +335,56 @@ programa{
 					escreva(i+1,". Nome: ", devolverFilms[i][0]," | ")
 					escreva("Ano: ", devolverFilms[i][1], "\n")
 					escreva("=======================\n")
-				}		
-			
+				}
 			}		
-				escreva("Escolha um filme para devolver: ")
+				escreva("\nQual filme você deseja devovler? ")
 				leia(filmeDevolvido)
-				
-				filmeDevolvido = filmeDevolvido - 1
-				limpa()
-				escreva("O filme: ", devolverFilms[filmeDevolvido][0], " | Ano: ", devolverFilms[filmeDevolvido][1], " Foi devolvido por você. Obrigado!")
-
-					 devolverFilms[filmeDevolvido][3] = "N"
-				
-		}	
-
-			se(contadorDevolver == 0){
-				escreva("Todos os filmes estão locados!")
+		
+		faca{
+			se(nao ti.cadeia_e_inteiro(filmeDevolvido, 10)){
+				escreva("\nEntrada inválida! Digite um dos numeros referente aos filmes!\n")
+				leia(filmeDevolvido)
+				j = 5
 			}
-					
-			escreva("Pressione Enter para continuar!")
-			leia(pausa)	
-	}
+			senao{
 
+				filmeDevolvidointeiro = ti.cadeia_para_inteiro(filmeDevolvido, 10) 
+				filmeDevolvidointeiro = filmeDevolvidointeiro - 1
+				filmeDevolvidovalid = ti.cadeia_para_inteiro(filmeDevolvido, 10)
+
+					se(filmeDevolvidovalid < 0 ou filmeDevolvidovalid > 10){
+					escreva("Entrada inválida! Digite um dos numeros referente aos filmes! \n")
+					leia(filmeDevolvido)
+					j = 5
+					}senao se(devolverFilms[filmeDevolvidointeiro][3] == "S"){
+					
+					j = 10
+
+					escreva("O filme abaixo foi foi devolvido por você. Obrigado!\n", devolverFilms[filmeDevolvidointeiro][0], " | Ano: ", devolverFilms[filmeDevolvidointeiro][1])
+
+					devolverFilms[filmeDevolvidointeiro][3] = "N"
+
+					}senao{
+					escreva("Entrada inválida! Digite um numero referente aos filmes que estão disponiveis.\n")
+					leia(filmeDevolvido)
+					j = 5
+					}
+			}
+
+		
+		
+		}enquanto(filmeDevolvidovalid < 0 ou filmeDevolvidovalid > 10 ou j != 10)
+				
+		}
+
+						se(contadorDevolver == 0){
+						escreva("Todos os filmes estão locados!")
+						}
+					
+						escreva("Pressione Enter para continuar!")
+						leia(pausa)	
+	}		
+		
 	//Vitor - Filme mais locado
 	funcao maisLocado(cadeia maisLoc[][], inteiro total){ 
 		inteiro i, j, k, filmeML = 0, counter = 0
@@ -354,27 +410,29 @@ programa{
 					counter++
 					}
 				}
-						se(counter == 1){
-						limpa()
-						escreva("=======================\n")
-						escreva("Filme mais locado: \n")
-						escreva("=======================\n")
-						}senao{
-						limpa()
-						escreva("=======================\n")
-						escreva("Filmes mais locados: \n")
-						escreva("=======================\n")
-						}
-							para(k = 0; k < total; k++){
-								se(ti.cadeia_para_inteiro(maisLoc[k][2], 10) == filmeML){
-								escreva("Nome: ", maisLoc[k][0]," | ")
-								escreva("Ano: ", maisLoc[k][1], " | ")
-								escreva("Vezes locado: ", maisLoc[k][2], "\n")											
-								}
-
+					se(counter == 1){
+					limpa()
+					escreva("=======================\n")
+					escreva("Filme mais locado: \n")
+					escreva("=======================\n")
+					}senao{
+					limpa()
+					escreva("=======================\n")
+					escreva("Filmes mais locados: \n")
+					escreva("=======================\n")
+					}
+						para(k = 0; k < total; k++){
+							se(ti.cadeia_para_inteiro(maisLoc[k][2], 10) == filmeML){
+							escreva("Nome: ", maisLoc[k][0]," | ")
+							escreva("Ano: ", maisLoc[k][1], " | ")
+							escreva("Vezes locado: ", maisLoc[k][2], "\n")											
 							}
-		}
 
+						}
+		}
+							escreva("Pressione Enter para continuar!")
+							leia(pausa)	
+				
 	}
 
 	// Weliton - Atualizar dados de um filme
@@ -501,6 +559,40 @@ programa{
 						escreva("\nPressione Enter para continuar!")
     							leia(pausa)
 	}
+
+
+		// Vitor - Estatisticas
+		funcao estatisticasFilmes(cadeia matriz[][], inteiro total){
+   		real qtdlocado = 0, validfilm = 0
+   		cadeia pausa
+    		limpa()
+
+    		se(total == 0){
+    			escreva("Nenhum filme cadastrado!\n")
+    			escreva("Pressione Enter para continuar!")
+			leia(pausa)
+    			retorne
+   		}
+	
+        	escreva("Estatisticas Filme!\n")
+        	escreva("============================\n")
+
+   			para (inteiro i = 0; i < total; i ++){
+    				se (matriz[i][3] == "S"){
+      				qtdlocado++ 
+    				} 
+    				
+        			validfilm = (qtdlocado / total) * 100
+  			}
+          
+          	escreva("\nQuantidade de filmes locados: ", qtdlocado)
+          	escreva("\nQuantos filmes estão cadastrados: ", total)
+          	escreva("\nQuantidade da ocupaçao é: ", validfilm,"%")
+          		
+          		escreva("\nPressione Enter para continuar!")
+				leia(pausa)
+          	
+  		}	
 	
 	funcao inicio()
 	{
@@ -559,54 +651,39 @@ programa{
 					listarFilmes(matriz, totalCadastrados)
 				pare
 				caso 3: //Ryan - FIlmes Locados
-						filmesLoc(matriz, totalCadastrados)
-					
+					filmesLoc(matriz, totalCadastrados)
 				pare
 				caso 4: // Renan - Alugar um filme
-						alugarFilmes(matriz, totalCadastrados)
+					alugarFilmes(matriz, totalCadastrados)
 				pare
 				caso 5: // Renan - Devolver um filme
-						devolverFilme(matriz, totalCadastrados)				
+					devolverFilme(matriz, totalCadastrados)				
 				pare
 				caso 6: // Vitor - FIlme mais locado
-						maisLocado(matriz, totalCadastrados)
+					maisLocado(matriz, totalCadastrados)
 				pare
 				caso 7: // Alan - Buscar FIlme pelo Nome
 					buscarFilmes(matriz, totalCadastrados)
-				
 				pare
 				caso 8: // Weliton - Atualizar dados de um filme 
 					atualizarFilmes(matriz, totalCadastrados)
 				pare
 				caso 9: // Vitor - Estatistica Geral
+					estatisticasFilmes(matriz, totalCadastrados)
 				pare
 				caso 10:
 					escreva("Este Programa vai explodir em:")
 					para(i = 10;i > 0; i--){
 						escreva("\n",i)
-						u.aguarde(300)
+						u.aguarde(1000)
 					}
 					escreva("\nBOOOOOOOOMMMM")
 				
 				pare
-			}
-			
-			
+
+			}	
 			
 		}enquanto(menu != 10)
 
 	}
 }
-
-/* $$$ Portugol Studio $$$ 
- * 
- * Esta seção do arquivo guarda informações do Portugol Studio.
- * Você pode apagá-la se estiver utilizando outro editor.
- * 
- * @POSICAO-CURSOR = 4945; 
- * @DOBRAMENTO-CODIGO = [233, 283, 332, 380];
- * @PONTOS-DE-PARADA = ;
- * @SIMBOLOS-INSPECIONADOS = ;
- * @FILTRO-ARVORE-TIPOS-DE-DADO = inteiro, real, logico, cadeia, caracter, vazio;
- * @FILTRO-ARVORE-TIPOS-DE-SIMBOLO = variavel, vetor, matriz, funcao;
- */
