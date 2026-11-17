@@ -1,0 +1,693 @@
+
+programa
+{
+    inclua biblioteca Util --> u
+    inclua biblioteca Texto --> t
+    inclua biblioteca Tipos --> ti
+
+    // ==========================================
+    // FUNÇÃO: VALIDAR NOME
+    // ==========================================
+    funcao logico validarNome(cadeia nome)
+    {
+        se (t.numero_caracteres(nome) == 0)
+        {
+            retorne falso
+        }
+
+        para (inteiro i = 0; i < t.numero_caracteres(nome); i++)
+        {
+            caracter caractereAtual = t.obter_caracter(nome, i)
+
+            se (caractereAtual == '0' ou caractereAtual == '1' ou
+                caractereAtual == '2' ou caractereAtual == '3' ou
+                caractereAtual == '4' ou caractereAtual == '5' ou
+                caractereAtual == '6' ou caractereAtual == '7' ou
+                caractereAtual == '8' ou caractereAtual == '9')
+            {
+                retorne falso
+            }
+        }
+
+        retorne verdadeiro
+    }
+
+    // ==========================================
+    // FUNÇÃO: VALIDAR SOMENTE NÚMEROS
+    // ==========================================
+    funcao logico validarNumero(cadeia valor)
+    {
+        se (t.numero_caracteres(valor) == 0)
+        {
+            retorne falso
+        }
+
+        para (inteiro i = 0; i < t.numero_caracteres(valor); i++)
+        {
+            caracter caractereAtual = t.obter_caracter(valor, i)
+
+            se (caractereAtual < '0' ou caractereAtual > '9')
+            {
+                retorne falso
+            }
+        }
+
+        retorne verdadeiro
+    }
+
+    // ==========================================
+    // FUNÇÃO: CADASTRAR FILMES
+    // ==========================================
+    funcao adFilmes(cadeia filmes[][], inteiro &linha)
+    {
+        cadeia nome
+        cadeia anoTexto
+        inteiro ano = 0
+        inteiro anoValido = 0
+        inteiro locacoes
+        cadeia situacao
+
+        se (linha >= 10)
+        {
+            escreva("\nLimite de filmes cadastrados atingido!")
+            retorne
+        }
+
+        escreva("\n========== CADASTRAR FILME ==========")
+
+        // VALIDAR NOME
+        faca
+        {
+            escreva("\nDigite o nome do filme: ")
+            leia(nome)
+
+            se (validarNome(nome) == falso)
+            {
+                escreva("\nNome inválido! Digite um nome sem números.")
+            }
+
+        } enquanto (validarNome(nome) == falso)
+
+        // ======================================
+        // VALIDAR ANO
+        // ======================================
+        anoValido = 0
+
+        faca
+        {
+            escreva("\nDigite o ano do filme (1887 a 2026): ")
+            leia(anoTexto)
+
+            se (validarNumero(anoTexto) == falso)
+            {
+                escreva("\nAno inválido! Digite somente números.")
+
+                ano = 0
+                anoValido = 0
+            }
+            senao
+            {
+                ano = ti.cadeia_para_inteiro(anoTexto, 10)
+
+                se (ano < 1887 ou ano > 2026)
+                {
+                    escreva("\nAno inválido! Digite um ano entre 1887 e 2026.")
+                    anoValido = 0
+                }
+                senao
+                {
+                    anoValido = 1
+                }
+            }
+
+        } enquanto (anoValido == 0)
+
+        // ======================================
+        // VALIDAR QUANTIDADE DE LOCAÇÕES
+        // ======================================
+        faca
+        {
+            escreva("\nDigite a quantidade de locações: ")
+            leia(locacoes)
+
+            se (locacoes < 0)
+            {
+                escreva("\nA quantidade não pode ser negativa!")
+            }
+
+        } enquanto (locacoes < 0)
+
+        // ======================================
+        // VALIDAR SITUAÇÃO
+        // ======================================
+        faca
+        {
+            escreva("\nSituação do filme:")
+            escreva("\nS = Alugado")
+            escreva("\nN = Disponível")
+            escreva("\nDigite a situação: ")
+            leia(situacao)
+
+            situacao = t.caixa_alta(situacao)
+
+            se (situacao != "S" e situacao != "N")
+            {
+                escreva("\nDigite somente S ou N!")
+            }
+
+        } enquanto (situacao != "S" e situacao != "N")
+
+        filmes[linha][0] = nome
+        filmes[linha][1] = ti.inteiro_para_cadeia(ano, 10)
+        filmes[linha][2] = ti.inteiro_para_cadeia(locacoes, 10)
+        filmes[linha][3] = situacao
+
+        linha++
+
+        escreva("\nFilme cadastrado com sucesso!")
+    }
+
+    // ==========================================
+    // FUNÇÃO: LISTAR TODOS OS FILMES
+    // ==========================================
+    funcao listarFilmes(cadeia filmes[][], inteiro total)
+    {
+        escreva("\n========== TODOS OS FILMES ==========")
+
+        se (total == 0)
+        {
+            escreva("\nNenhum filme cadastrado.")
+            retorne
+        }
+
+        para (inteiro i = 0; i < total; i++)
+        {
+            escreva("\n\nFilme: ", filmes[i][0])
+            escreva("\nAno: ", filmes[i][1])
+            escreva("\nQuantidade de locações: ", filmes[i][2])
+
+            se (filmes[i][3] == "S")
+            {
+                escreva("\nSituação: Alugado")
+            }
+            senao
+            {
+                escreva("\nSituação: Disponível")
+            }
+        }
+    }
+
+    // ==========================================
+    // FUNÇÃO: LISTAR FILMES LOCADOS
+    // ==========================================
+    funcao filmesLoc(cadeia filmes[][], inteiro total)
+    {
+        inteiro encontrados = 0
+
+        escreva("\n========== FILMES LOCADOS ==========")
+
+        para (inteiro i = 0; i < total; i++)
+        {
+            se (filmes[i][3] == "S")
+            {
+                escreva("\nFilme: ", filmes[i][0])
+                escreva("\nAno: ", filmes[i][1])
+
+                encontrados++
+            }
+        }
+
+        se (encontrados == 0)
+        {
+            escreva("\nNenhum filme está alugado.")
+        }
+    }
+
+    // ==========================================
+    // FUNÇÃO: LISTAR FILMES DISPONÍVEIS
+    // ==========================================
+    funcao listarDisponiveis(cadeia filmes[][], inteiro total)
+    {
+        inteiro encontrados = 0
+
+        escreva("\n========== FILMES DISPONÍVEIS ==========")
+
+        para (inteiro i = 0; i < total; i++)
+        {
+            se (filmes[i][3] == "N")
+            {
+                escreva("\nFilme: ", filmes[i][0])
+                escreva("\nAno: ", filmes[i][1])
+
+                encontrados++
+            }
+        }
+
+        se (encontrados == 0)
+        {
+            escreva("\nNenhum filme disponível.")
+        }
+    }
+
+    // ==========================================
+    // FUNÇÃO: BUSCAR FILME
+    // ==========================================
+    funcao buscarFilmes(cadeia filmes[][], inteiro total)
+    {
+        cadeia nome
+        logico encontrado = falso
+
+        escreva("\n========== BUSCAR FILME ==========")
+        escreva("\nDigite o nome do filme: ")
+        leia(nome)
+
+        para (inteiro i = 0; i < total; i++)
+        {
+            se (t.caixa_alta(filmes[i][0]) == t.caixa_alta(nome))
+            {
+                escreva("\nFilme encontrado!")
+                escreva("\nNome: ", filmes[i][0])
+                escreva("\nAno: ", filmes[i][1])
+                escreva("\nLocações: ", filmes[i][2])
+
+                se (filmes[i][3] == "S")
+                {
+                    escreva("\nSituação: Alugado")
+                }
+                senao
+                {
+                    escreva("\nSituação: Disponível")
+                }
+
+                encontrado = verdadeiro
+            }
+        }
+
+        se (encontrado == falso)
+        {
+            escreva("\nFilme não encontrado.")
+        }
+    }
+
+    // ==========================================
+    // FUNÇÃO: ALUGAR FILME
+    // ==========================================
+    funcao alugarFilmes(cadeia filmes[][], inteiro total)
+    {
+        cadeia nome
+        logico encontrado = falso
+
+        escreva("\n========== ALUGAR FILME ==========")
+        escreva("\nDigite o nome do filme: ")
+        leia(nome)
+
+        para (inteiro i = 0; i < total; i++)
+        {
+            se (t.caixa_alta(filmes[i][0]) == t.caixa_alta(nome))
+            {
+                encontrado = verdadeiro
+
+                se (filmes[i][3] == "S")
+                {
+                    escreva("\nEste filme já está alugado.")
+                }
+                senao
+                {
+                    filmes[i][3] = "S"
+
+                    inteiro quantidade = ti.cadeia_para_inteiro(filmes[i][2], 10)
+                    quantidade++
+
+                    filmes[i][2] = ti.inteiro_para_cadeia(quantidade, 10)
+
+                    escreva("\nFilme alugado com sucesso!")
+                }
+
+                pare
+            }
+        }
+
+        se (encontrado == falso)
+        {
+            escreva("\nFilme não encontrado.")
+        }
+    }
+
+    // ==========================================
+    // FUNÇÃO: DEVOLVER FILME
+    // ==========================================
+    funcao devolverFilme(cadeia filmes[][], inteiro total)
+    {
+        cadeia nome
+        logico encontrado = falso
+
+        escreva("\n========== DEVOLVER FILME ==========")
+        escreva("\nDigite o nome do filme: ")
+        leia(nome)
+
+        para (inteiro i = 0; i < total; i++)
+        {
+            se (t.caixa_alta(filmes[i][0]) == t.caixa_alta(nome))
+            {
+                encontrado = verdadeiro
+
+                se (filmes[i][3] == "N")
+                {
+                    escreva("\nEste filme já está disponível.")
+                }
+                senao
+                {
+                    filmes[i][3] = "N"
+                    escreva("\nFilme devolvido com sucesso!")
+                }
+
+                pare
+            }
+        }
+
+        se (encontrado == falso)
+        {
+            escreva("\nFilme não encontrado.")
+        }
+    }
+
+    // ==========================================
+    // FUNÇÃO: FILME MAIS LOCADO
+    // ==========================================
+    funcao maisLocado(cadeia filmes[][], inteiro total)
+    {
+        se (total == 0)
+        {
+            escreva("\nNenhum filme cadastrado.")
+            retorne
+        }
+
+        inteiro maior = -1
+        inteiro posicao = 0
+
+        para (inteiro i = 0; i < total; i++)
+        {
+            inteiro quantidade = ti.cadeia_para_inteiro(filmes[i][2], 10)
+
+            se (quantidade > maior)
+            {
+                maior = quantidade
+                posicao = i
+            }
+        }
+
+        escreva("\n========== FILME MAIS LOCADO ==========")
+        escreva("\nFilme: ", filmes[posicao][0])
+        escreva("\nQuantidade de locações: ", filmes[posicao][2])
+    }
+
+    // ==========================================
+    // FUNÇÃO: ATUALIZAR DADOS
+    // ==========================================
+    funcao atualizarFilmes(cadeia filmes[][], inteiro total)
+    {
+        cadeia nome
+        inteiro opcao
+        inteiro posicao = -1
+
+        escreva("\n========== ATUALIZAR FILME ==========")
+        escreva("\nDigite o nome do filme: ")
+        leia(nome)
+
+        para (inteiro i = 0; i < total; i++)
+        {
+            se (t.caixa_alta(filmes[i][0]) == t.caixa_alta(nome))
+            {
+                posicao = i
+                pare
+            }
+        }
+
+        se (posicao == -1)
+        {
+            escreva("\nFilme não encontrado.")
+            retorne
+        }
+
+        escreva("\nFilme encontrado: ", filmes[posicao][0])
+
+        escreva("\n\nO que deseja atualizar?")
+        escreva("\n1 - Nome")
+        escreva("\n2 - Ano")
+        escreva("\n3 - Quantidade de locações")
+        escreva("\n4 - Situação")
+        escreva("\n5 - Todos os dados")
+        escreva("\nEscolha: ")
+        leia(opcao)
+
+        // ======================================
+        // ATUALIZAR NOME
+        // ======================================
+        se (opcao == 1 ou opcao == 5)
+        {
+            cadeia novoNome
+
+            faca
+            {
+                escreva("\nDigite o novo nome: ")
+                leia(novoNome)
+
+                se (validarNome(novoNome) == falso)
+                {
+                    escreva("\nNome inválido!")
+                }
+
+            } enquanto (validarNome(novoNome) == falso)
+
+            filmes[posicao][0] = novoNome
+        }
+
+        // ======================================
+        // ATUALIZAR ANO
+        // ======================================
+        se (opcao == 2 ou opcao == 5)
+        {
+            cadeia anoTexto
+            inteiro novoAno = 0
+            inteiro anoValido = 0
+
+            anoValido = 0
+
+            faca
+            {
+                escreva("\nDigite o novo ano (1887 a 2026): ")
+                leia(anoTexto)
+
+                se (validarNumero(anoTexto) == falso)
+                {
+                    escreva("\nAno inválido! Digite somente números.")
+
+                    novoAno = 0
+                    anoValido = 0
+                }
+                senao
+                {
+                    novoAno = ti.cadeia_para_inteiro(anoTexto, 10)
+
+                    se (novoAno < 1887 ou novoAno > 2026)
+                    {
+                        escreva("\nAno inválido! Digite um ano entre 1887 e 2026.")
+                        anoValido = 0
+                    }
+                    senao
+                    {
+                        anoValido = 1
+                    }
+                }
+
+            } enquanto (anoValido == 0)
+
+            filmes[posicao][1] = ti.inteiro_para_cadeia(novoAno, 10)
+        }
+
+        // ======================================
+        // ATUALIZAR LOCAÇÕES
+        // ======================================
+        se (opcao == 3 ou opcao == 5)
+        {
+            inteiro novasLocacoes
+
+            faca
+            {
+                escreva("\nDigite a nova quantidade de locações: ")
+                leia(novasLocacoes)
+
+                se (novasLocacoes < 0)
+                {
+                    escreva("\nQuantidade inválida!")
+                }
+
+            } enquanto (novasLocacoes < 0)
+
+            filmes[posicao][2] = ti.inteiro_para_cadeia(novasLocacoes, 10)
+        }
+
+        // ======================================
+        // ATUALIZAR SITUAÇÃO
+        // ======================================
+        se (opcao == 4 ou opcao == 5)
+        {
+            cadeia novaSituacao
+
+            faca
+            {
+                escreva("\nS = Alugado")
+                escreva("\nN = Disponível")
+                escreva("\nDigite a nova situação: ")
+                leia(novaSituacao)
+
+                novaSituacao = t.caixa_alta(novaSituacao)
+
+                se (novaSituacao != "S" e novaSituacao != "N")
+                {
+                    escreva("\nSituação inválida!")
+                }
+
+            } enquanto (novaSituacao != "S" e novaSituacao != "N")
+
+            filmes[posicao][3] = novaSituacao
+        }
+
+        se (opcao < 1 ou opcao > 5)
+        {
+            escreva("\nOpção inválida.")
+        }
+        senao
+        {
+            escreva("\nDados atualizados com sucesso!")
+        }
+    }
+
+    // ==========================================
+    // FUNÇÃO: ESTATÍSTICAS
+    // ==========================================
+    funcao estatisticasFilmes(cadeia filmes[][], inteiro total)
+    {
+        inteiro alugados = 0
+        inteiro disponiveis = 0
+        inteiro totalLocacoes = 0
+
+        para (inteiro i = 0; i < total; i++)
+        {
+            se (filmes[i][3] == "S")
+            {
+                alugados++
+            }
+            senao
+            {
+                disponiveis++
+            }
+
+            totalLocacoes = totalLocacoes +
+                ti.cadeia_para_inteiro(filmes[i][2], 10)
+        }
+
+        escreva("\n========== ESTATÍSTICAS ==========")
+        escreva("\nTotal de filmes cadastrados: ", total)
+        escreva("\nFilmes alugados: ", alugados)
+        escreva("\nFilmes disponíveis: ", disponiveis)
+        escreva("\nTotal de locações realizadas: ", totalLocacoes)
+    }
+
+    // ==========================================
+    // FUNÇÃO: MENU PRINCIPAL
+    // ==========================================
+    funcao menuInicio(inteiro menu, inteiro i, inteiro i3,
+                      inteiro &totalCadastrados,
+                      cadeia matriz[][], cadeia men)
+    {
+        faca
+        {
+            limpa()
+
+            escreva("\n========== SISTEMA DE FILMES ==========")
+            escreva("\n1 - Cadastrar filme")
+            escreva("\n2 - Listar filmes")
+            escreva("\n3 - Filmes locados")
+            escreva("\n4 - Alugar filme")
+            escreva("\n5 - Devolver filme")
+            escreva("\n6 - Filme mais locado")
+            escreva("\n7 - Buscar filme")
+            escreva("\n8 - Atualizar dados")
+            escreva("\n9 - Estatísticas")
+            escreva("\n10 - Sair")
+
+            escreva("\n\nDigite uma opção: ")
+            leia(menu)
+
+            escolha (menu)
+            {
+                caso 1:
+                    adFilmes(matriz, totalCadastrados)
+                    pare
+
+                caso 2:
+                    listarFilmes(matriz, totalCadastrados)
+                    pare
+
+                caso 3:
+                    filmesLoc(matriz, totalCadastrados)
+                    pare
+
+                caso 4:
+                    alugarFilmes(matriz, totalCadastrados)
+                    pare
+
+                caso 5:
+                    devolverFilme(matriz, totalCadastrados)
+                    pare
+
+                caso 6:
+                    maisLocado(matriz, totalCadastrados)
+                    pare
+
+                caso 7:
+                    buscarFilmes(matriz, totalCadastrados)
+                    pare
+
+                caso 8:
+                    atualizarFilmes(matriz, totalCadastrados)
+                    pare
+
+                caso 9:
+                    estatisticasFilmes(matriz, totalCadastrados)
+                    pare
+
+                caso 10:
+                    escreva("\nEncerrando o programa...")
+                    pare
+
+                caso contrario:
+                    escreva("\nOpção inválida!")
+            }
+
+            se (menu != 10)
+            {
+                escreva("\n\nPressione ENTER para continuar.")
+                leia(men)
+            }
+
+        } enquanto (menu != 10)
+    }
+
+    // ==========================================
+    // FUNÇÃO PRINCIPAL
+    // ==========================================
+    funcao inicio()
+    {
+        inteiro opcaoMenu = 0
+        inteiro i = 0
+        inteiro i3 = 0
+        inteiro total = 0
+
+        cadeia matriz[10][4]
+        cadeia escolhaMenu = ""
+
+        menuInicio(opcaoMenu, i, i3, total, matriz, escolhaMenu)
+    }
+}
