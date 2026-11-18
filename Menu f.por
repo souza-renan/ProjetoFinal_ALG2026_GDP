@@ -12,7 +12,6 @@ programa{
 			escreva("1. Cadastrar um filme \n2. Listar Filmes locados e disponíveis \n3. Filmes locados \n4. Alugar um filme \n5. Devolver um filme \n6. Filme mais locado \n7. Buscar um filme pelo nome \n8. Atualizar dados de um filme \n9. Estatísticas gerais \n10. Sair do programa \n\nQual A sua escolha? ")
 			leia(men)
 			escreva("\n")
-
 			
 			faca{
 			se(nao ti.cadeia_e_inteiro(men, 10)){
@@ -64,12 +63,11 @@ programa{
 				caso 10:
 					sair()
 				pare
-
+					
 			}	
 			
 		}enquanto(menu != 10)
 
-		
 	}
 	
 	//Ryan/Weliton/ALan - Cadastrar um filme
@@ -78,7 +76,7 @@ programa{
 		cadeia pausa, nomeFilme, filmeAlugado, anoCadeia, anoC, qtdC 
 		inteiro ano = 0, anoAtual = c.ano_atual(), i = 0, qtd = 0
 
-		se(linha > 10){
+		se(linha >= 10){
 			escreva("Limite de filmes cadastrados atingido!")
 			escreva("Pressione Enter para continuar!\n")
 			leia(pausa)
@@ -107,12 +105,12 @@ programa{
 				ano = ti.cadeia_para_inteiro(anoC, 10)
 				i = 10
 			}
-			se(ano < 1887 ou ano > anoAtual){
-				escreva("Digite um ano válido, maior que 1888 e anterior ao ano atual \n")
-				leia(anoC)
+				se(ano < 1887 ou ano > anoAtual){
+					escreva("Digite um ano válido, maior que 1888 e anterior ao ano atual \n")
+					leia(anoC)
 			}
 		
-			filmes[linha][1] = ti.inteiro_para_cadeia(ano, 10)
+				filmes[linha][1] = ti.inteiro_para_cadeia(ano, 10)
 		
 		}enquanto(ano < 1887 ou ano > anoAtual ou i != 10)
 	
@@ -138,24 +136,21 @@ programa{
 			
 		}enquanto(qtd < 0 ou i != 10)
 
-		
-
 		escreva("O filme está locado? (Responda com S ou N): ")
 		leia(filmeAlugado)
 		filmes[linha][3] = t.caixa_alta(filmeAlugado)
-		se(filmes[linha][3] != "S" e filmes[linha][3] != "N"){
-			faca{
-				escreva("Entrada inválida! Digite apenas S ou N:  \n")
-				leia(filmes[linha][3])
-			}enquanto(filmes[linha][3] != "S" e filmes[linha][3] != "N")
-		}	
+			se(filmes[linha][3] != "S" e filmes[linha][3] != "N"){
+				faca{
+					escreva("Entrada inválida! Digite apenas S ou N:  \n")
+					leia(filmes[linha][3])
+				}enquanto(filmes[linha][3] != "S" e filmes[linha][3] != "N")
+			}	
 		
-		linha++
+			linha++
 		
-		escreva("Filme cadastrado com sucesso!\n")
-		escreva("Pressione Enter para continuar!\n")
-		leia(pausa)
-		
+			escreva("Filme cadastrado com sucesso!\n")
+			escreva("Pressione Enter para continuar!\n")
+			leia(pausa)
 	}
 	
 	// Ryan - Listar filmes locados
@@ -185,10 +180,8 @@ programa{
 					escreva("Vezes Locados: ", filLocados[l][2], "\n")
 					escreva("Filme Alugado(S / N): ", filLocados[l][3], "\n")
 					escreva("=======================\n")
-			
-					
+				
 				}	
-	
 			}
 		}
 		escreva("Pressione Enter para continuar!\n")
@@ -206,48 +199,47 @@ programa{
 			escreva("Pressione Enter para continuar!")
 			leia(pausa)
 			retorne
-		}
-		senao{
-			limpa()
-			escreva("=======================\n")
-			escreva("        Locados        \n")
-			escreva("=======================\n")
+		}senao{
+		limpa()
+		escreva("=======================\n")
+		escreva("        Locados        \n")
+		escreva("=======================\n")
 
-			para(inteiro i = 0; i < total; i++){
+		para(inteiro i = 0; i < total; i++){
 
-				se(matriz[i][3] == "S"){	
-					validLocados++
-					escreva("Filme ", i + 1,": \n")
-					escreva("Nome: ", matriz[i][0],"\n")
-					escreva("Ano: ", matriz[i][1], "\n")
-					escreva("Vezes Locados:", matriz[i][2], "\n")
-					escreva("---------------------\n")
-				}
-			}	
-			se(validLocados == 0){
+			se(matriz[i][3] == "S"){	
+				validLocados++
+				escreva("Filme ", i + 1,": \n")
+				escreva("Nome: ", matriz[i][0],"\n")
+				escreva("Ano: ", matriz[i][1], "\n")
+				escreva("Vezes Locados:", matriz[i][2], "\n")
+				escreva("---------------------\n")
+			}
+		}	
+				se(validLocados == 0){
 				escreva("Nenhum filme locado no momento!\n")	
-			}
-
-			escreva("=======================\n")
-			escreva("      Disponiveis      \n")
-			escreva("=======================\n")
-
-			para(inteiro i = 0; i < total; i++){
-
-				se(matriz[i][3] == "N"){
-					validDisp++
-					escreva("Filme ", i + 1,": \n")
-					escreva("Nome: ", matriz[i][0],"\n")
-					escreva("Ano: ", matriz[i][1], "\n")
-					escreva("Vezes Locados:", matriz[i][2], "\n")
-					escreva("---------------------\n")
 				}
-			}
-			se(validDisp == 0){
-				escreva("Nenhum filme disponível no momento!\n")	
-			}			
-			escreva("Pressione Enter para continuar!")
-			leia(pausa)
+
+				escreva("=======================\n")
+				escreva("      Disponiveis      \n")
+				escreva("=======================\n")
+
+				para(inteiro i = 0; i < total; i++){
+
+					se(matriz[i][3] == "N"){
+						validDisp++
+						escreva("Filme ", i + 1,": \n")
+						escreva("Nome: ", matriz[i][0],"\n")
+						escreva("Ano: ", matriz[i][1], "\n")
+						escreva("Vezes Locados:", matriz[i][2], "\n")
+						escreva("---------------------\n")
+					}
+				}
+					se(validDisp == 0){
+					escreva("Nenhum filme disponível no momento!\n")	
+					}			
+					escreva("Pressione Enter para continuar!")
+					leia(pausa)
 		}
 		
 	}
@@ -273,9 +265,9 @@ programa{
 			leia(nomeFilme)
 
 			se(nomeFilme == ""){
-				retorne
-				
+				retorne				
 			}
+			
 			nomeFilme = t.caixa_alta(nomeFilme)
 
 			para(inteiro i = 0; i< total; i++){
@@ -291,15 +283,15 @@ programa{
 					filmeEncontrado++
 					escreva("Pressione Enter para continuar!")
 					leia(pausa)
-				}senao{
+				}
+			}
+				se(filmeEncontrado == 0){
 					limpa()
 					escreva("=====================\n")
 					escreva("Filme não encontrado!\n")
 					escreva("=====================\n")
-					escreva("Pressione Enter para continuar!")
-					leia(pausa)
-				}
-				
+					escreva("Pressione Enter para continuar (teste)!")
+					leia(pausa)	
 			}
 		}enquanto(filmeEncontrado == 0)
 		
@@ -351,41 +343,40 @@ programa{
 				j = 5
 				
 				}senao{
-				
-				filmeLocadointeiro = ti.cadeia_para_inteiro(filmeLocado, 10) 
-				filmeLocadointeiro = filmeLocadointeiro - 1
-				filmeLocadovalid = ti.cadeia_para_inteiro(filmeLocado, 10)
+					filmeLocadointeiro = ti.cadeia_para_inteiro(filmeLocado, 10) 
+					filmeLocadointeiro = filmeLocadointeiro - 1
+					filmeLocadovalid = ti.cadeia_para_inteiro(filmeLocado, 10)
 					
-					se(filmeLocadointeiro < 0 ou filmeLocadointeiro >= total){
-					escreva("Entrada inválida! Digite um dos numeros referente aos filmes!\n")
-					leia(filmeLocado)
-					j = 5
-					}senao se(alugarFilms[filmeLocadointeiro][3] == "N"){
+						se(filmeLocadointeiro < 0 ou filmeLocadointeiro >= total){
+						escreva("Entrada inválida! Digite um dos numeros referente aos filmes!\n")
+						leia(filmeLocado)
+						j = 5
+						}senao se(alugarFilms[filmeLocadointeiro][3] == "N"){
 
-					j = 10
+						j = 10
 	
-					escreva("O filme abaixo foi foi locado por você. Obrigado!\n", alugarFilms[filmeLocadointeiro][0], "\nAno: ", alugarFilms[filmeLocadointeiro][1])
+						escreva("O filme abaixo foi foi locado por você. Obrigado!\n", alugarFilms[filmeLocadointeiro][0], "\nAno: ", alugarFilms[filmeLocadointeiro][1])
 
-					alugarFilms[filmeLocadointeiro][3] = "S"
+						alugarFilms[filmeLocadointeiro][3] = "S"
 					 
-					inteiro validLocadoMaisUm = ti.cadeia_para_inteiro(alugarFilms[filmeLocadointeiro][2], 10)
-					alugarFilms[filmeLocadointeiro][2] = ti.inteiro_para_cadeia(validLocadoMaisUm + 1,10)
+						inteiro validLocadoMaisUm = ti.cadeia_para_inteiro(alugarFilms[filmeLocadointeiro][2], 10)
+						alugarFilms[filmeLocadointeiro][2] = ti.inteiro_para_cadeia(validLocadoMaisUm + 1,10)
 				
-					}senao{
-					escreva("Entrada inválida! Digite um numero referente aos filmes que estão disponiveis.\n")
-					leia(filmeLocado)
-					j = 5
-					}	
-				}
+						}senao{
+							escreva("Entrada inválida! Digite um numero referente aos filmes que estão disponiveis.\n")
+							leia(filmeLocado)
+							j = 5
+							}	
+							}
 		
-			}enquanto(filmeLocadovalid < 0 ou filmeLocadovalid > 10 ou j != 10)
+			}enquanto(filmeLocadovalid < 0 ou filmeLocadovalid > total ou j != 10)
 				
 		}	
-						se(contadorAlugar == 0){
-						escreva("Todos os filmes estão locados!")
-						}
-							escreva("Pressione Enter para continuar!")
-							leia(pausa)
+		se(contadorAlugar == 0){
+			escreva("Todos os filmes estão locados!")
+		}
+			escreva("\nPressione Enter para continuar!")
+			leia(pausa)
 	}
 
 	//Renan - Devolver um filme
@@ -399,9 +390,7 @@ programa{
 			escreva("Pressione Enter para continuar!")
 			leia(pausa)
 			retorne
-		}
-		senao{
-
+		}senao{
 			limpa()
 			escreva("===================================\n")
 			escreva("Filmes disponiveis para devolução: \n")
@@ -425,49 +414,44 @@ programa{
 				escreva("\nQual filme você deseja devovler? ")
 				leia(filmeDevolvido)
 		
-		faca{
-			se(nao ti.cadeia_e_inteiro(filmeDevolvido, 10)){
-				escreva("\nEntrada inválida! Digite um dos numeros referente aos filmes!\n")
-				leia(filmeDevolvido)
-				j = 5
-			}
-			senao{
-
-				filmeDevolvidointeiro = ti.cadeia_para_inteiro(filmeDevolvido, 10) 
-				filmeDevolvidointeiro = filmeDevolvidointeiro - 1
-				filmeDevolvidovalid = ti.cadeia_para_inteiro(filmeDevolvido, 10)
-
-					se(filmeDevolvidovalid < 0 ou filmeDevolvidovalid > 10){
-					escreva("Entrada inválida! Digite um dos numeros referente aos filmes! \n")
+			faca{
+				se(nao ti.cadeia_e_inteiro(filmeDevolvido, 10)){
+					escreva("\nEntrada inválida! Digite um dos numeros referente aos filmes!\n")
 					leia(filmeDevolvido)
 					j = 5
+				}senao{
+					filmeDevolvidointeiro = ti.cadeia_para_inteiro(filmeDevolvido, 10) 
+					filmeDevolvidointeiro = filmeDevolvidointeiro - 1
+					filmeDevolvidovalid = ti.cadeia_para_inteiro(filmeDevolvido, 10)
+
+						se(filmeDevolvidovalid < 0 ou filmeDevolvidovalid > 10){
+						escreva("Entrada inválida! Digite um dos numeros referente aos filmes! \n")
+						leia(filmeDevolvido)
+						j = 5
 					}senao se(devolverFilms[filmeDevolvidointeiro][3] == "S"){
-					
-					j = 10
+						j = 10
 
-					escreva("O filme abaixo foi foi devolvido por você. Obrigado!\n", devolverFilms[filmeDevolvidointeiro][0], " | Ano: ", devolverFilms[filmeDevolvidointeiro][1])
+						escreva("O filme abaixo foi foi devolvido por você. Obrigado!\n", devolverFilms[filmeDevolvidointeiro][0], " | Ano: ", devolverFilms[filmeDevolvidointeiro][1])
 
-					devolverFilms[filmeDevolvidointeiro][3] = "N"
+						devolverFilms[filmeDevolvidointeiro][3] = "N"
 
 					}senao{
-					escreva("Entrada inválida! Digite um numero referente aos filmes que estão disponiveis.\n")
-					leia(filmeDevolvido)
-					j = 5
+						escreva("Entrada inválida! Digite um numero referente aos filmes que estão disponiveis.\n")
+						leia(filmeDevolvido)
+						j = 5
 					}
-			}
-
+				}
 		
-		
-		}enquanto(filmeDevolvidovalid < 0 ou filmeDevolvidovalid > 10 ou j != 10)
+			}enquanto(filmeDevolvidovalid < 0 ou filmeDevolvidovalid > total ou j != 10)
 				
 		}
 
-						se(contadorDevolver == 0){
-						escreva("Todos os filmes estão locados!")
-						}
+			se(contadorDevolver == 0){
+			escreva("Todos os filmes estão locados!")
+			}
 					
-						escreva("Pressione Enter para continuar!")
-						leia(pausa)	
+				escreva("\nPressione Enter para continuar!")
+				leia(pausa)	
 	}		
 		
 	//Vitor - Filme mais locado
@@ -481,30 +465,27 @@ programa{
 			escreva("Pressione Enter para continuar!")
 			leia(pausa)
 			retorne
-		}
-		senao{
-		
+		}senao{
 			para(i = 0; i < total; i++){
 				se(ti.cadeia_para_inteiro(maisLoc[i][2], 10) > filmeML){
 				filmeML = ti.cadeia_para_inteiro(maisLoc[i][2], 10)
 				}
 			}
-			
 				para(j = 0; j < total; j++){
 					se(ti.cadeia_para_inteiro(maisLoc[j][2], 10) == filmeML){
 					counter++
 					}
 				}
 					se(counter == 1){
-					limpa()
-					escreva("=======================\n")
-					escreva("Filme mais locado: \n")
-					escreva("=======================\n")
+						limpa()
+						escreva("=======================\n")
+						escreva("Filme mais locado: \n")
+						escreva("=======================\n")
 					}senao{
-					limpa()
-					escreva("=======================\n")
-					escreva("Filmes mais locados: \n")
-					escreva("=======================\n")
+						limpa()
+						escreva("=======================\n")
+						escreva("Filmes mais locados: \n")
+						escreva("=======================\n")
 					}
 						para(k = 0; k < total; k++){
 							se(ti.cadeia_para_inteiro(maisLoc[k][2], 10) == filmeML){
@@ -515,15 +496,15 @@ programa{
 
 						}
 		}
-							escreva("Pressione Enter para continuar!")
-							leia(pausa)	
+			escreva("Pressione Enter para continuar!")
+			leia(pausa)	
 				
 	}
 
 	// Weliton - Atualizar dados de um filme
 	funcao atualizarFilmes(cadeia matriz[][], inteiro total){
-		cadeia nomeFilme, pausa, novoNome, resposta
-    		inteiro encontrado = 0, opcao
+		cadeia nomeFilme, pausa, novoNome, resposta, anoC, qtdC, filmeAlugado
+    		inteiro encontrado = 0, opcao, anoAtual = c.ano_atual(), ano = 0, qtd = 0, validfaca = 0
 
     		limpa()
 
@@ -532,14 +513,14 @@ programa{
     			escreva("Pressione Enter para continuar!")
 			leia(pausa)
     			retorne
-   		}
-    		senao{
-        	escreva("============================\n")
-        	escreva("      ATUALIZAR FILME       \n")
-        	escreva("============================\n")
+   		}senao{
+    			faca{
+        		escreva("============================\n")
+        		escreva("      ATUALIZAR FILME       \n")
+        		escreva("============================\n")
 
-        	escreva("Digite o nome do filme que deseja atualizar: ")
-        	leia(nomeFilme)
+        		escreva("Digite o nome do filme que deseja atualizar: ")
+        		leia(nomeFilme)
 
         		nomeFilme = t.caixa_alta(nomeFilme)
 
@@ -548,30 +529,29 @@ programa{
             		se(matriz[i][0] == nomeFilme){
 					encontrado = 1
 
-                	limpa()
+               	 	limpa()
 
-                	escreva("Filme encontrado!\n")
-                	escreva("============================\n")
-                	escreva("Nome: ", matriz[i][0], "\n")
-                	escreva("Ano: ", matriz[i][1], "\n")
-                	escreva("Vezes locados: ", matriz[i][2], "\n")
-                	escreva("Alugado: ", matriz[i][3], "\n")
+	                	escreva("Filme encontrado!\n")
+                		escreva("============================\n")
+                		escreva("Nome: ", matriz[i][0], "\n")
+                		escreva("Ano: ", matriz[i][1], "\n")
+                		escreva("Vezes locados: ", matriz[i][2], "\n")
+                		escreva("Alugado: ", matriz[i][3], "\n")
 
-                	escreva("============================\n")
-                	escreva("O que deseja atualizar?\n")
-                	escreva("1 - Nome do filme\n")
-                	escreva("2 - Ano de lançamento\n")
-                	escreva("3 - Quantidade de locações\n")
-                	escreva("4 - Situação do filme (S/N)\n")
-                	escreva("5 - Atualizar todos os dados\n")
-                	escreva("0 - Cancelar\n")
+                		escreva("============================\n")
+                		escreva("O que deseja atualizar?\n")
+                		escreva("1 - Nome do filme\n")
+                		escreva("2 - Ano de lançamento\n")
+                		escreva("3 - Quantidade de locações\n")
+                		escreva("4 - Status da locação\n")
+                		escreva("0 - Cancelar\n")
 
-                	escreva("\nEscolha uma opção: ")
+                		escreva("\nEscolha uma opção: ")
                 		leia(opcao)
 
-                		escolha(opcao){
+               		escolha(opcao){
 
-                    	caso 1:
+                    	caso 1: //Atualizar ano
                         	escreva("Digite o novo nome: ")
 					leia(novoNome)
 
@@ -580,69 +560,100 @@ programa{
 					escreva("\nNome atualizado com sucesso!")
                     	pare
 
-                    	caso 2:
-					escreva("Digite o novo ano: ")
-					leia(matriz[i][1])
+                    	caso 2: //Atualizar ano
 
-					escreva("\nAno atualizado com sucesso!")
+					escreva("Digite o ano de lançamento do filme (somente números): ")
+					leia(anoC)
+					faca{
+						se(nao ti.cadeia_e_inteiro(anoC, 10)){
+						escreva("Entrada inválida! Digite o ano utilizando apenas números:  \n")
+						leia(anoC)
+						validfaca = 5
+						}senao{
+						ano = ti.cadeia_para_inteiro(anoC, 10)
+						escreva("Ano atualizado com sucesso!")
+						validfaca = 10
+						}
+							se(ano < 1887 ou ano > anoAtual){
+								escreva("Digite um ano válido, maior que 1888 e anterior ao ano atual \n")
+								leia(anoC)
+							}
+		
+							matriz[i][1] = ti.inteiro_para_cadeia(ano, 10)
+		
+					}enquanto(ano < 1887 ou ano > anoAtual ou validfaca != 10)					
+					
 					pare
-                    	caso 3:
+					caso 3: //Atualizar qtd locacoes
 
-					escreva("Digite a nova quantidade de locações: ")
-					leia(matriz[i][2])
+					escreva("Digite quantas vezes o filme já foi alugado: ")
+					leia(qtdC)
+					faca{
+						se(nao ti.cadeia_e_inteiro(qtdC, 10)){
+							escreva("Entrada inválida! Digite a quantidade utilizando apenas números:  \n")
+							leia(qtdC)
+							validfaca = 5
+						}senao{
+							qtd = ti.cadeia_para_inteiro(qtdC, 10)
+							escreva("Quantidade de vezes locado atualizado com sucesso!")
+							validfaca = 10
+						}
+							se(qtd < 0){
+								escreva("Digite um numero válido, maior que 0: \n")
+								leia(qtdC)
+							}
+			
+							matriz[i][2] = ti.inteiro_para_cadeia(qtd, 10)
+			
+					}enquanto(qtd < 0 ou validfaca != 10)
+                    	
+                    	pare
+                    	caso 4:
+					escreva("O filme está locado? (Responda com S ou N): ")
+					leia(filmeAlugado)
+					matriz[i][3] = t.caixa_alta(filmeAlugado)
+						se(matriz[i][3] != "S" e matriz[i][3] != "N"){
+							faca{
+							escreva("Entrada inválida! Digite apenas S ou N:  \n")
+								leia(matriz[i][3])
+							}enquanto(matriz[i][3] != "S" e matriz[i][3] != "N")
+						}
 
-					escreva("\nQuantidade atualizada com sucesso!")
+						escreva("Status do filme atualizado com sucesso!")
                     	pare
 
-					caso 4:
-					escreva("O filme está alugado? (S/N): ")
-					leia(resposta)
+                    	caso 0:
+                        		escreva("\nAtualização cancelada!")
+                    	pare
 
-					matriz[i][3] = t.caixa_alta(resposta)
-
-					escreva("\nSituação atualizada com sucesso!")
-                    pare
-
-                    caso 5:
-					escreva("Digite o novo nome: ")
-					leia(novoNome)
-
-					matriz[i][0] = t.caixa_alta(novoNome)
-
-					escreva("Digite o novo ano: ")
-					leia(matriz[i][1])
-
-					escreva("Digite a quantidade de locações: ")
-					leia(matriz[i][2])
-
-					escreva("O filme está alugado? (S/N): ")
-					leia(resposta)
-
-					matriz[i][3] = t.caixa_alta(resposta)
-
-					escreva("\nTodos os dados foram atualizados!")
-                    pare
-
-                    caso 0:
-
-                        escreva("\nAtualização cancelada!")
-                    pare
-
-                    caso contrario:
-
-                        escreva("\nOpção inválida!")
-                    pare
+                    	caso contrario:
+                        		escreva("\nOpção inválida!")
+                    	pare
                 		}
-            		}
-			}
+            		}//se
+			}//para
 
-        				se(encontrado == 0){
-            				escreva("\nFilme não encontrado!")
-        				}
-    		}
+        		se(encontrado == 0){
+            		escreva("\nFilme não encontrado!\nPressione 9 para ver a lista de filmes\nPressione Enter para continuar!")
+            		leia(pausa)
+            			
+            			se(pausa == "9"){
+            				limpa()
+            				escreva("=====================\n")
+						escreva("Lista de filmes!\n")
+						escreva("=====================\n")
+            					para(inteiro j = 0; j < total; j++){
 
+								escreva(matriz[j][0],"\n")
+            					}
+            				}
+        		}
+        				
+    			}enquanto(encontrado == 0)
+    			
+   		}
 						escreva("\nPressione Enter para continuar!")
-    							leia(pausa)
+    						leia(pausa)
 	}
 
 	// Vitor - Estatisticas
@@ -676,8 +687,7 @@ programa{
           	escreva("\nQuantidade da ocupaçao é: ", validfilm,"%")
           		
           		escreva("\nPressione Enter para continuar!")
-				leia(pausa)
-          	
+				leia(pausa)          	
   		}	
 
 	// Alan - Sair
@@ -689,6 +699,7 @@ programa{
 		}
 		escreva("\nBOOOOOOOOMMMM")
 	}
+
 	
 	funcao inicio()
 	{
