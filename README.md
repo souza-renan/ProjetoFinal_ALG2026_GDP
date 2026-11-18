@@ -20,7 +20,7 @@
 - [x] Operadores aritméticos (+, -, %)
 - [x] Operadores relacionais (==, !=, >, <, >=, <=)
 
-### Funções Utilizadas
+### Bibliotecas Utilizadas
 - [x] Util
 - [x] Texto
 - [x] Tipos
