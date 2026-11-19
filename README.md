@@ -33,7 +33,8 @@
 - [x] Java 
 
 ### Nome dos colaboradores e funções
-- [x] Renan Cristiano de Souza - Líder do grupo, responsável pelo acompanhamento do desenvolvimento, pela revisão e pela finalização do código. Desenvolveu o menu principal e a funcionalidade do minijogo de Pedra, Papel e Tesoura.
-- [x] Ryan Gabriel Fernandes de Rezende - Responsável pela organização do repositório no GitHub e pela estrutura inicial do código. Desenvolveu as funcionalidades de passagem do tempo, com avanço de 8 horas e contagem dos dias, e de alimentação do pet.
-- [x] Vitor Antonio Severino - Desenvolveu as funcionalidades relacionadas à saúde e à higiene do pet, incluindo o sistema de doenças, a recuperação da saúde e o banho. Também realizou a maior parte dos testes após o desenvolvimento, identificando erros e pontos que precisavam de ajustes.
-
+- [x] Alan Felipe Vaz e Silva - Responsável pela criação das funções de listagem de filmes disponíveis e locados e de busca de filmes pelo nome. Também colaborou no desenvolvimento de todas as funcionalidades do código.
+- [x] Renan Cristiano de Souza - Líder do grupo, responsável pelo acompanhamento do desenvolvimento, pela revisão e pela finalização do código. Desenvolveu as funções de aluguel e devolução de filmes. Também colaborou no desenvolvimento das funções de busca, listagem e estatísticas.
+- [x] Ryan Gabriel Fernandes de Rezende - Responsável pela organização do repositório no GitHub e pela estrutura inicial do código. Desenvolveu as funções de menu inicial e cadastro de filmes. Também foi responsável pela estruturação e padronização do preenchimento das matrizes.
+- [x] Vitor Antonio Severino - Responsável pelo desenvolvimento das funcionalidades relacionadas às estatísticas gerais e à identificação do filme mais locado.
+- [x] Weliton Aparecido Nunes Silva - Desenvolveu a funcionalidade de alteração das informações dos filmes. Também auxiliou no desenvolvimento do menu.
